@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Медкарта «Лапы»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>/* Макет: шапка + липкие вкладки, одна колонка до 1120px; интервью — список людей слева, встреча справа. Тёмная тема AMP по умолчанию. */
+:root {
+  --bg: #0b0f14; --s1: #141a22; --s2: #1b232d; --s3: #232d39; --line: #263140;
+  --fg: #e9eef4; --fg2: #a7b4c3; --fg3: #7d8b9c;
+  --acc: #17d07c; --acc2: #2ee89a; --acc-ink: #04140c; --acc-soft: rgba(23,208,124,.12);
+  --bk: #6ee7ff; --mc: #a78bfa; --bl: #f0abfc;
+  --warn: #f5b84a; --warn-soft: rgba(245,184,74,.12); --bad: #ff6b6b; --bad-soft: rgba(255,107,107,.12);
+  --code-bg: #0f141b;
+  --f-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-head: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --f-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+  --r: 10px;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #f4f6f8; --s1: #ffffff; --s2: #f0f3f6; --s3: #e6ebf0; --line: #d6dde5;
+  --fg: #0f1720; --fg2: #3e4c5c; --fg3: #6a7888;
+  --acc: #0a7d46; --acc2: #0f9a58; --acc-ink: #ffffff; --acc-soft: rgba(10,125,70,.1);
+  --bk: #0b7f99; --mc: #6d4fd6; --bl: #b5359f;
+  --warn: #9a6100; --warn-soft: rgba(196,125,0,.12); --bad: #c62828; --bad-soft: rgba(198,40,40,.08);
+  --code-bg: #eef2f6; color-scheme: light; } }
+:root[data-theme="light"] {
+  --bg: #f4f6f8; --s1: #ffffff; --s2: #f0f3f6; --s3: #e6ebf0; --line: #d6dde5;
+  --fg: #0f1720; --fg2: #3e4c5c; --fg3: #6a7888;
+  --acc: #0a7d46; --acc2: #0f9a58; --acc-ink: #ffffff; --acc-soft: rgba(10,125,70,.1);
+  --bk: #0b7f99; --mc: #6d4fd6; --bl: #b5359f;
+  --warn: #9a6100; --warn-soft: rgba(196,125,0,.12); --bad: #c62828; --bad-soft: rgba(198,40,40,.08);
+  --code-bg: #eef2f6; color-scheme: light; }
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.6 var(--f-ui); }
+a { color: var(--acc); }
+h1, h2, h3, h4 { font-family: var(--f-head); line-height: 1.2; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(26px, 4.4vw, 38px); letter-spacing: -.01em; }
+h2 { font-size: 23px; }
+h3 { font-size: 18px; }
+h4 { font-size: 15px; }
+p { margin: 0; }
+code, pre, .mono { font-family: var(--f-mono); font-size: 13px; }
+code { background: var(--code-bg); border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; }
+pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; margin: 0; line-height: 1.5; white-space: pre; }
+pre code { border: 0; padding: 0; background: none; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { border-bottom: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+th { color: var(--fg2); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; background: var(--s2); }
+td { font-variant-numeric: tabular-nums; }
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+.tbl table th:first-child, .tbl table td:first-child { padding-left: 12px; }
+ul, ol { margin: 0; padding-left: 22px; }
+li + li { margin-top: 4px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+textarea, input[type=text] { font: inherit; color: var(--fg); background: var(--s2); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; width: 100%; }
+textarea { min-height: 84px; resize: vertical; }
+
+/* шапка */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 1120px; margin: 0 auto; padding: 10px 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.brand svg { width: 30px; height: 30px; flex: none; }
+.brand .wm { font: 700 17px var(--f-head); letter-spacing: -.01em; }
+.brand .wm i { color: #6ee7ff; font-style: normal; }
+.brand .sep { color: var(--fg3); }
+.brand .prod { font: 600 15px var(--f-head); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brand .sp { flex: 1; }
+.who { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--fg2); white-space: nowrap; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--feat); display: inline-block; flex: none; }
+.icon-btn { background: var(--s2); border: 1px solid var(--line); border-radius: 8px; width: 34px; height: 34px; display: grid; place-items: center; font-size: 15px; flex: none; }
+.tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -4px; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 12px 9px; color: var(--fg2); white-space: nowrap; font-weight: 500; font-size: 14px; }
+.tab:hover { color: var(--fg); }
+.tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--acc); }
+.tab .n { font: 600 11px var(--f-mono); color: var(--fg3); margin-left: 4px; }
+
+main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 80px; }
+.page { display: flex; flex-direction: column; gap: 22px; }
+.sec { display: flex; flex-direction: column; gap: 12px; }
+.lead { font-size: 17px; color: var(--fg2); max-width: 68ch; }
+.muted { color: var(--fg3); }
+.small { font-size: 13px; }
+.prose { display: flex; flex-direction: column; gap: 10px; max-width: 72ch; }
+.eyebrow { font: 600 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--fg3); }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.grid2 > *, .grid3 > * { min-width: 0; }
+
+.card { background: var(--s1); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card.flat { background: var(--s2); border-color: transparent; }
+.note { border-radius: var(--r); padding: 12px 14px; background: var(--acc-soft); border: 1px solid color-mix(in srgb, var(--acc) 35%, transparent); display: flex; flex-direction: column; gap: 6px; }
+.note.warn { background: var(--warn-soft); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+.note.bad { background: var(--bad-soft); border-color: color-mix(in srgb, var(--bad) 40%, transparent); }
+.note b:first-child { font-family: var(--f-head); }
+
+.btn { display: inline-flex; align-items: center; gap: 7px; border-radius: 9px; padding: 8px 14px; border: 1px solid var(--line); background: var(--s2); font-weight: 500; font-size: 14px; }
+.btn:hover { border-color: var(--fg3); }
+.btn.primary { background: linear-gradient(135deg, var(--acc), var(--acc2)); color: var(--acc-ink); border-color: transparent; font-weight: 600; box-shadow: 0 0 0 1px color-mix(in srgb, var(--acc) 40%, transparent), 0 6px 20px -8px var(--acc); }
+.btn.ghost { background: none; }
+.btn.sm { padding: 5px 10px; font-size: 13px; border-radius: 7px; }
+.btn:disabled { opacity: .5; cursor: default; }
+.chip { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 500; background: var(--s3); color: var(--fg2); white-space: nowrap; }
+.chip.acc { background: var(--acc-soft); color: var(--acc); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.bad { background: var(--bad-soft); color: var(--bad); }
+.chip.feat { background: color-mix(in srgb, var(--feat) 16%, transparent); color: var(--feat); }
+
+/* герой */
+.hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+.hero-txt { display: flex; flex-direction: column; gap: 12px; }
+.hero h1 b { background: linear-gradient(90deg, #6ee7ff, #a78bfa 55%, #f0abfc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.feature-card { border: 1px solid color-mix(in srgb, var(--feat) 45%, var(--line)); background: linear-gradient(160deg, color-mix(in srgb, var(--feat) 12%, var(--s1)), var(--s1) 60%); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.feature-card .ico { font-size: 30px; line-height: 1; }
+.feature-card h2 { font-size: 21px; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 14px; }
+.kv dt { color: var(--fg3); }
+.kv dd { margin: 0; }
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; } }
+
+/* маршрут */
+.route { display: flex; flex-direction: column; gap: 8px; }
+.stage { background: var(--s1); border: 1px solid var(--line); border-radius: var(--r); }
+.stage > summary { list-style: none; display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 14px; cursor: pointer; }
+.stage > summary::-webkit-details-marker { display: none; }
+.stage .num { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font: 600 13px var(--f-mono); background: var(--s3); color: var(--fg2); }
+.stage.done .num { background: var(--acc); color: var(--acc-ink); }
+.stage .st-t { font-weight: 600; }
+.stage .st-m { font-size: 13px; color: var(--fg3); }
+.stage-body { padding: 0 16px 16px 56px; display: flex; flex-direction: column; gap: 12px; }
+@media (max-width: 600px) { .stage-body { padding-left: 16px; } }
+.simple { border-left: 3px solid var(--feat); padding: 4px 0 4px 12px; color: var(--fg2); }
+.simple b { color: var(--fg); }
+.hints { display: flex; flex-direction: column; gap: 8px; }
+.hint { background: var(--s2); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
+.hint .lv { font: 600 11px var(--f-mono); color: var(--warn); text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: 2px; }
+.check { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.check input { margin-top: 4px; accent-color: var(--acc); width: 16px; height: 16px; flex: none; }
+.progress { height: 6px; background: var(--s3); border-radius: 99px; overflow: hidden; }
+.progress i { display: block; height: 100%; background: linear-gradient(90deg, var(--acc), var(--acc2)); border-radius: 99px; transition: width .3s; }
+
+/* письмо и документы */
+.letter { background: var(--s1); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.letter-h { padding: 12px 16px; background: var(--s2); display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 13.5px; }
+.letter-h span:nth-child(odd) { color: var(--fg3); }
+.letter-b { padding: 16px; display: flex; flex-direction: column; gap: 10px; max-width: 74ch; }
+.docs { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 16px; align-items: start; }
+.doc-list { display: flex; flex-direction: column; gap: 6px; position: sticky; top: 120px; }
+.doc-btn { text-align: left; background: var(--s1); border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.doc-btn[aria-current="true"] { border-color: var(--acc); background: var(--acc-soft); }
+.doc-btn .k { font: 600 11px var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--fg3); }
+.doc-btn .seen { color: var(--acc); font-size: 12px; }
+.doc-view { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.paper { background: var(--s1); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; display: flex; flex-direction: column; gap: 10px; min-width: 0; overflow-x: auto; }
+.paper h4 { margin-top: 4px; }
+.paper blockquote { margin: 0; padding: 8px 14px; border-left: 3px solid var(--line); color: var(--fg2); }
+.paper table { font-size: 13.5px; }
+@media (max-width: 760px) { .docs { grid-template-columns: 1fr; } .doc-list { position: static; } }
+
+/* интервью */
+.iv { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 16px; align-items: start; }
+.people { display: flex; flex-direction: column; gap: 6px; position: sticky; top: 120px; }
+.person { text-align: left; background: var(--s1); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 2px 10px; align-items: center; }
+.person[aria-current="true"] { border-color: var(--acc); background: var(--acc-soft); }
+.person .em { font-size: 22px; grid-row: span 2; text-align: center; }
+.person .nm { font-weight: 600; font-size: 14px; line-height: 1.3; }
+.person .rl { font-size: 12px; color: var(--fg3); line-height: 1.3; }
+.person .cnt { grid-column: 2; font: 500 11.5px var(--f-mono); color: var(--fg3); }
+.meeting { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.m-head { display: flex; gap: 12px; align-items: flex-start; }
+.m-head .em { font-size: 36px; line-height: 1; }
+.say { background: var(--s2); border-radius: 4px 14px 14px 14px; padding: 10px 14px; max-width: 72ch; }
+.ask { align-self: flex-end; background: var(--acc-soft); border: 1px solid color-mix(in srgb, var(--acc) 30%, transparent); border-radius: 14px 4px 14px 14px; padding: 8px 14px; max-width: 72ch; }
+.log { display: flex; flex-direction: column; gap: 10px; }
+.qa { display: flex; flex-direction: column; gap: 8px; }
+.facts-out { display: flex; flex-direction: column; gap: 6px; max-width: 72ch; }
+.fact-add { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; background: var(--s1); border: 1px dashed var(--line); border-radius: 8px; padding: 8px 10px; }
+.fact-add .t { flex: 1; min-width: 0; }
+.fact-add.in { border-style: solid; border-color: color-mix(in srgb, var(--acc) 40%, transparent); }
+.qbank { display: flex; flex-direction: column; gap: 10px; }
+.topic { display: flex; flex-direction: column; gap: 6px; }
+.topic h4 { font-size: 12.5px; color: var(--fg3); text-transform: uppercase; letter-spacing: .06em; font-family: var(--f-mono); font-weight: 600; }
+.qbtn { text-align: left; background: var(--s1); border: 1px solid var(--line); border-radius: 9px; padding: 8px 12px; display: flex; gap: 10px; align-items: baseline; }
+.qbtn:hover { border-color: var(--acc); }
+.qbtn .mn { font: 500 11.5px var(--f-mono); color: var(--fg3); margin-left: auto; white-space: nowrap; }
+.qbtn .tag { font: 600 10.5px var(--f-mono); color: var(--warn); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+.free { display: flex; flex-direction: column; gap: 8px; }
+@media (max-width: 760px) { .iv { grid-template-columns: 1fr; } .people { position: static; display: grid; grid-template-columns: 1fr 1fr; } }
+@media (max-width: 440px) { .people { grid-template-columns: 1fr; } }
+
+/* блокнот */
+.nb-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.nb-item:last-child { border-bottom: 0; }
+.nb-item .src { font-size: 12.5px; color: var(--fg3); }
+.nb-item .x { background: none; border: 0; color: var(--fg3); font-size: 18px; line-height: 1; padding: 2px 6px; align-self: start; }
+.nb-item .x:hover { color: var(--bad); }
+.stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.stat { background: var(--s1); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: flex; flex-direction: column; min-width: 120px; }
+.stat b { font: 600 22px var(--f-head); font-variant-numeric: tabular-nums; }
+.stat span { font-size: 12.5px; color: var(--fg3); }
+
+/* стыки */
+.seam { border-left: 3px solid var(--feat2, var(--acc)); }
+.give-take { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.give-take > div { background: var(--s2); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+@media (max-width: 600px) { .give-take { grid-template-columns: 1fr; } }
+.map svg { width: 100%; max-width: 560px; height: auto; display: block; margin: 0 auto; }
+.map text { fill: var(--fg); font-family: var(--f-ui); }
+.map .sub { fill: var(--fg3); font-size: 12px; }
+
+/* сдача */
+.files { font: 13px/1.7 var(--f-mono); background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; white-space: pre; }
+.badbood { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.badbood > div { border-radius: 8px; padding: 10px 12px; font-size: 14px; min-width: 0; }
+.badbood .b { background: var(--bad-soft); }
+.badbood .g { background: var(--acc-soft); }
+.badbood .lbl { font: 600 11px var(--f-mono); text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: 2px; }
+.badbood .b .lbl { color: var(--bad); }
+.badbood .g .lbl { color: var(--acc); }
+@media (max-width: 600px) { .badbood { grid-template-columns: 1fr; } }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 9px 16px; border-radius: 9px; font-size: 14px; z-index: 50; box-shadow: 0 8px 30px rgba(0,0,0,.35); }
+.foot { max-width: 1120px; margin: 0 auto; padding: 0 16px 40px; color: var(--fg3); font-size: 12.5px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>// Общая часть трёх заданий: продукт «Лапа», платформа, соглашения, маршрут, шаблоны пакета.
+window.COMMON = {
+  product: 'Лапа',
+  version: '1.0 · октябрь 2026',
+  deadline: '', // если пусто — «срок назначит наставник»
+
+  features: [
+    { code: 'booking', student: 'Эльнара', title: 'Онлайн-запись на приём', icon: '📅', color: 'var(--bk)', prefix: 'BK', api: '/api/v1/booking', tbl: 'bk_',
+      one: 'Владелец сам записывает питомца к врачу в приложении, администратор — по телефону, в одном расписании без двойных записей.' },
+    { code: 'medcard', student: 'Олеся', title: 'Электронная медкарта питомца', icon: '🩺', color: 'var(--mc)', prefix: 'MC', api: '/api/v1/medcard', tbl: 'mc_',
+      one: 'Одна карта питомца на всю сеть: приёмы, диагнозы, назначения, вакцинации, файлы — врачу и владельцу.' },
+    { code: 'billing', student: 'Никита', title: 'Счёт и оплата', icon: '🧾', color: 'var(--bl)', prefix: 'BL', api: '/api/v1/billing', tbl: 'bl_',
+      one: 'Счёт собирается сам из приёма, оплата на кассе и онлайн, чеки, возвраты, предоплаты и долги без потерь.' },
+  ],
+
+  legend: [
+    'Сеть ветеринарных клиник «Лапа» — 5 клиник в Нижнем Новгороде и области, одна из них круглосуточная со стационаром. 38 врачей, ~250 приёмов в день. Своей ИТ-системы у сети нет: старая настольная программа в трёх клиниках, Excel и бумага в двух.',
+    'Сеть заказала свой продукт «Лапа»: приложение владельца питомца (открывается в браузере телефона, можно поставить на экран), рабочее место клиники для врачей, ассистентов и администраторов и сервер с API.',
+    'Продукт собирается из трёх больших фич. Каждую фичу проектирует один аналитик из вашей тройки — от первых вопросов заказчику до пакета, по которому разработчик напишет код. Потом наставник соберёт продукт с помощью ИИ-разработчика строго по вашим пакетам. Что не написано в пакете — того в продукте не будет.',
+  ],
+
+  clinics: [
+    ['VAN', '«Лапа на Ванеева»', 'ул. Ванеева, 34', '08:00–21:00 ежедневно', 'флагман; хирургия; вызов врача на дом; кардиолог'],
+    ['L24', '«Лапа-24»', 'ул. Белинского, 110', 'круглосуточно', 'стационар на 14 мест; хирургия; экстренные без записи; вызов на дом; ночной тариф'],
+    ['SRM', '«Лапа в Сормове»', 'ул. Коминтерна, 168', '09:00–20:00', 'экзотолог (птицы, грызуны, рептилии)'],
+    ['AVT', '«Лапа на Автозаводе»', 'пр. Ленина, 88', '09:00–20:00', 'учёт в Excel и на бумаге'],
+    ['KST', '«Лапа в Кстове»', 'г. Кстово, ул. Гражданская, 7', '09:00–19:00', 'область; интернет иногда пропадает; Excel и бумага'],
+  ],
+
+  numbers: [
+    ['5', 'клиник, все UTC+3'],
+    ['38', 'врачей, 6 ассистентов, 14 администраторов'],
+    ['~250', 'приёмов в день, в пн и пт до 320'],
+    ['22 тыс.', 'владельцев и 31 тыс. питомцев в старых базах'],
+    ['2 900 ₽', 'средний чек'],
+    ['18 %', 'питомцев ходят в 2+ клиники сети'],
+  ],
+
+  asis: [
+    '<b>Запись</b> — только по телефону через администратора. В часы пик (пт 17–20, сб 9–12, пн 9–11) сеть пропускает около 30 % звонков. Неявки — 12 % записей.',
+    '<b>Медкарта</b> — в старой программе «ВетБаза» (у каждой клиники своя отдельная база) или в Word и на бумаге. Врач не видит приёмы питомца в другой клинике. Ветпаспорт с прививками — бумажный, у владельца.',
+    '<b>Счёт</b> — врач пишет на бумажке «что сделал», администратор набирает чек на кассе вручную. По сверке около 4 % услуг и препаратов не попадают в чек. Очередь на кассе в пик — 10–15 минут. Онлайн-оплаты нет. Бухгалтерия на аутсорсе получает данные в Excel раз в неделю.',
+  ],
+
+  goals: [
+    'Онлайн-записей — не меньше 40 % (сейчас 0).',
+    'Неявок — 6 % вместо 12 %.',
+    '«Утечка выручки» — меньше 1 % вместо 4 %.',
+    'Одна медкарта питомца на всю сеть.',
+    'Очередь на кассе в пик — не больше 3 минут.',
+    'Пилот — март 2027 в «Лапа на Ванеева» и «Лапа-24», к июню 2027 — все 5 клиник.',
+  ],
+
+  platform: [
+    ['Вход и роли', 'Владелец входит по SMS-коду. Сотрудники — логин, пароль и второй фактор. Роли: <code>owner</code> владелец питомца, <code>admin</code> администратор, <code>doctor</code> врач, <code>assistant</code> ассистент, <code>manager</code> управляющий клиникой, <code>director</code> руководство сети, <code>system</code> вызовы между фичами. В токене: <code>userId</code>, <code>role</code>, <code>clinicIds</code>.'],
+    ['Клиника', '<code>id, code, name, address, timezone, openingHours, phone, features</code> (surgery, hospital, homeVisits, emergency24).'],
+    ['Сотрудник', '<code>id, fullName, role, clinicIds, specializations, phone, active</code>. Специализации: therapist, surgeon, dermatologist, cardiologist, ophthalmologist, exotic, dentist, ultrasound.'],
+    ['Владелец', '<code>id, fullName, phone</code> (уникален, +7XXXXXXXXXX), <code>email</code> (необязателен), <code>pdConsentAt, createdAt</code>.'],
+    ['Питомец (базовый профиль)', '<code>id, name, species</code> (cat, dog, rabbit, ferret, rodent, bird, reptile, other), <code>breed, sex, birthDate, birthDateApprox, color, chipNumber</code> (15 цифр), <code>neutered, primaryOwnerId, photoFileId, deceasedAt</code>. Экзотические — все виды, кроме кошек и собак.'],
+    ['Уведомления', '<code>POST /api/v1/platform/notifications {ownerId, channel: auto|push|sms|email, template, params, dedupKey}</code>. <code>auto</code> — пуш, если есть приложение, иначе SMS. Повтор с тем же <code>dedupKey</code> за 24 часа не отправляется. Тексты шаблонов пишет фича.'],
+    ['Файлы', '<code>POST /api/v1/platform/files</code> (до 25 МБ) → <code>{fileId, url}</code>.'],
+    ['Аудит', '<code>POST /api/v1/platform/audit {actorId, action, entity, entityId, before, after, reason}</code> — общий журнал, хранится 5 лет.'],
+    ['События', 'Шина событий: фича публикует событие, подписчики получают его «хотя бы один раз» — возможны повторы и другой порядок. Событие платформы <code>platform.owner.deleted {ownerId}</code> — владелец попросил удалить персональные данные, каждая фича обезличивает у себя.'],
+  ],
+  platformApi: [
+    'GET  /api/v1/platform/clinics',
+    'GET  /api/v1/platform/staff?role=&clinicId=&specialization=',
+    'GET  /api/v1/platform/owners/{id}',
+    'GET  /api/v1/platform/owners?phone=',
+    'GET  /api/v1/platform/owners/{id}/pets',
+    'GET  /api/v1/platform/pets/{id}',
+    'POST /api/v1/platform/pets',
+    'PATCH /api/v1/platform/pets/{id}',
+    'POST /api/v1/platform/notifications',
+    'POST /api/v1/platform/files',
+    'POST /api/v1/platform/audit',
+  ],
+
+  conventions: [
+    ['REST + JSON', 'Пути <code>/api/v1/&lt;фича&gt;/…</code>, существительные во множественном числе. Действие, которое не сводится к созданию или правке, — подресурс: <code>POST /appointments/{id}/cancel</code>.'],
+    ['Идентификаторы', 'UUID строкой. Номер для людей (номер счёта, номер записи) — отдельное поле.'],
+    ['Время', 'В API — ISO 8601 со смещением: <code>2026-11-03T14:30:00+03:00</code>. В базе — <code>timestamptz</code>. Дата без времени — <code>YYYY-MM-DD</code>.'],
+    ['Деньги', 'Целое число копеек, поле с суффиксом <code>Kop</code>: <code>priceKop: 150000</code> = 1 500,00 ₽. Только рубли.'],
+    ['Ошибки', 'RFC 9457, <code>application/problem+json</code>: <code>{type, title, status, detail, code}</code>. <code>code</code> — машинный код вида <code>SLOT_TAKEN</code>. Каждый код перечислен в спецификации.'],
+    ['Повтор запроса', 'Каждый <code>POST</code>, который создаёт запись или двигает деньги, принимает заголовок <code>Idempotency-Key</code>: повтор с тем же ключом возвращает тот же ответ и ничего не создаёт второй раз.'],
+    ['Списки', 'Пагинация <code>?limit=&amp;cursor=</code>, по умолчанию 50, максимум 200.'],
+    ['События', 'Имя <code>&lt;фича&gt;.&lt;сущность&gt;.&lt;действие&gt;</code>, например <code>booking.appointment.cancelled</code>. Конверт: <code>{eventId, type, occurredAt, producer, data}</code>. Подписчик обрабатывает повтор того же <code>eventId</code> без последствий.'],
+    ['Чужие данные', 'Фича не читает и не пишет чужие таблицы — только API соседа или его события.'],
+    ['Таблицы', 'PostgreSQL. У каждой фичи свой префикс: <code>bk_</code>, <code>mc_</code>, <code>bl_</code>.'],
+    ['Аудит и уведомления', 'Важные для споров изменения пишутся в аудит платформы. Уведомления — только через платформу, тексты — в спецификации фичи.'],
+    ['Права', 'Проверяются на сервере на каждый запрос: владелец видит только своих питомцев и свои данные, сотрудник — только свои клиники, если правилами фичи не сказано иное.'],
+  ],
+
+  // Маршрут. Ключи совпадают с FEATURE.hints.
+  stages: [
+    { id: 'context', t: 'Разберись в продукте и своей фиче', time: '30 мин',
+      simple: '<b>Как веранда к дому.</b> Прежде чем пристраивать веранду, обойди дом: где дверь, куда смотрят окна, кто живёт рядом.',
+      do: ['Прочитай вкладки «Продукт» и «Запрос заказчика».', 'Запиши своими словами три фразы: что за фича, кто ей пользуется, какую боль она снимает. Это пойдёт в раздел 1 спецификации.', 'Посмотри на карту стыков: с кем из ребят тебе придётся договариваться.'],
+      result: 'Три фразы о фиче и список соседей.' },
+    { id: 'docs', t: 'Изучи документы «как есть»', time: '1 ч',
+      simple: '<b>Как следователь на месте.</b> Пока свидетели не начали рассказывать, осмотри всё сам: бумаги, журналы, жалобы. В них есть детали, о которых люди забудут сказать.',
+      do: ['Открой каждый документ на вкладке «Документы».', 'Выписывай в блокнот числа, исключения, жалобы и «странности» — свои заметки под каждым документом.', 'Составь список вопросов, которые появились после документов. С ним иди на интервью.'],
+      result: 'Заметки по документам и список вопросов к интервью.' },
+    { id: 'interview', t: 'Проведи интервью со стейкхолдерами', time: '2 ч',
+      simple: '<b>Как врач на приёме.</b> Хороший врач не спрашивает «дать вам таблетку?». Он спрашивает «где болит, когда началось, что пробовали». Спрашивай о работе и проблемах людей, а не о кнопках.',
+      do: ['Поговори с каждым на вкладке «Интервью». Начинай с открытых вопросов «как сейчас».', 'Уточняющие вопросы появляются после основных — не пропускай их, там самое важное.', 'Всё полезное записывай в блокнот. Время встреч считается: хороший аналитик укладывается в разумное время.', 'Если человек говорит «не знаю, решайте сами» — запиши это как допущение.'],
+      result: 'Блокнот фактов, список допущений и открытых вопросов.' },
+    { id: 'analysis', t: 'Разбери требования и противоречия', time: '1 ч',
+      simple: '<b>Как два гостя и музыка.</b> Один просит рок, другой джаз. Диджей не решает за хозяина вечеринки — он идёт к хозяину. Противоречия решает тот, кто отвечает за результат.',
+      do: ['Разложи факты по группам: цели, правила, данные, роли и доступ, исключения, нефункциональные.', 'Найди противоречия (блокнот подсветит их) и вернись с ними к тому, кто принимает решение.', 'Запиши рамки: что входит в эту версию, что нет и когда будет.', 'Отдельно — допущения (что решено без ответа заказчика) и открытые вопросы.'],
+      result: 'Цели, рамки, решения по противоречиям, допущения — разделы 1–2 спецификации.' },
+    { id: 'seams', t: 'Стыковая встреча с соседями', time: '1 ч вместе',
+      simple: '<b>Как мост с двух берегов.</b> Две бригады строят мост навстречу друг другу. Если не договориться заранее о высоте и точке встречи, пролёты не сойдутся.',
+      do: ['Созвонись с соседями по каждому стыку (вкладка «Стыки»).', 'Пройдите по пунктам «договорить»: кто вызывает кого, какие поля, что при ошибке и повторе.', 'Запишите протокол. Раздел «Стыки» в обоих пакетах должен совпадать слово в слово.', 'Базовый контракт от наставника менять нельзя, можно только дополнять.'],
+      result: 'Протокол стыковой встречи и раздел 10 спецификации.' },
+    { id: 'scenarios', t: 'Сценарии, бизнес-правила, статусы', time: '1 день',
+      simple: '<b>Как рецепт.</b> Мало написать «испечь пирог». Нужны шаги, граммы и что делать, если тесто не поднялось.',
+      do: ['Бизнес-правила — нумерованные (BR-01…), у каждого числа и источник.', 'Сценарии (UC-01…) по ролям: основной поток шагами, альтернативы, исключения с кодами ошибок.', 'Статусная модель: диаграмма и таблица переходов — кто переводит, при каком условии, что происходит после.'],
+      result: 'Разделы 3, 5, 6, 7 спецификации.' },
+    { id: 'data', t: 'Модель данных', time: '0,5 дня',
+      simple: '<b>Как опись склада.</b> Что лежит, на какой полке, с какой этикеткой и что нельзя ставить рядом.',
+      do: ['Таблицы своей фичи с префиксом: поле, тип, обязательность, ограничения, описание.', 'Связи — ER-диаграмма в Mermaid. На сущности платформы и соседей — только ссылки по id.', 'Индексы и уникальности, которые защищают правила (например, «нельзя дважды»). Сроки хранения.'],
+      result: 'Раздел 8 спецификации.' },
+    { id: 'api', t: 'API и события', time: '0,5–1 день',
+      simple: '<b>Как меню в ресторане.</b> Что можно заказать, что принесут, сколько ждать и что скажет официант, если блюдо закончилось.',
+      do: ['Сводка эндпоинтов: метод, путь, роль, что делает.', 'Для каждого — пример запроса и ответа JSON и все коды ошибок.', 'События, которые публикуешь и слушаешь: схема <code>data</code>, что делаешь при повторе.', 'Полный контракт — в <code>openapi.yaml</code> (шаблон на вкладке «Сдача»).'],
+      result: 'Раздел 9–10 и файл openapi.yaml.' },
+    { id: 'nfr', t: 'Экраны, уведомления, нефункциональные требования', time: '0,5 дня',
+      simple: '<b>Как характеристики машины.</b> «Едет» — не характеристика. Разгон до сотни, расход, число подушек безопасности — характеристики.',
+      do: ['Экраны: кто видит, поля, действия, состояния «пусто / загрузка / ошибка».', 'Уведомления: когда, кому, канал, точный текст с параметрами.', 'Нефункциональные — только с числами: время ответа, нагрузка, доступность, права, персональные данные, аудит, хранение.'],
+      result: 'Разделы 11–13 спецификации.' },
+    { id: 'acceptance', t: 'Критерии приёмки и тестовые данные', time: '0,5 дня',
+      simple: '<b>Как билеты с ответами к экзамену.</b> По ним проверят, что построено именно то, что заказали.',
+      do: ['На каждое бизнес-правило — хотя бы один критерий «Дано / Когда / Тогда» с конкретными данными.', 'Обязательно — негативные случаи и граничные значения (ровно 2 часа, ровно 15 минут).', 'Тестовые данные — <code>seed.json</code>: возьми общие данные платформы и добавь свои.'],
+      result: 'Раздел 14 и seed.json.' },
+    { id: 'aicheck', t: 'Проверка глазами ИИ-разработчика', time: '1 ч',
+      simple: '<b>Как рецепт другу, который никогда не готовил.</b> Дай и посмотри, где он переспросит. Каждый его вопрос — дыра в рецепте.',
+      do: ['Отдай пакет любой нейросети (Claude, GigaChat, другая) с промптом с вкладки «Сдача».', 'Исправь всё, где она угадывает, находит противоречия или не может написать тест.', 'Пройди чек-лист самопроверки.'],
+      result: 'Пакет готов к сдаче.' },
+  ],
+
+  cats: {
+    goal: 'Цели и метрики', scope: 'Рамки', role: 'Роли и доступ', rule: 'Правила', data: 'Данные',
+    status: 'Статусы', scenario: 'Сценарии', nfr: 'Нефункциональные', seam: 'Стыки с соседями',
+    legal: 'Закон и споры', integration: 'Внешние системы', migration: 'Перенос старых данных',
+  },
+
+  aiRules: [
+    'У каждого требования свой ID (BR-07, UC-03, AC-12) — на них ссылаются тесты и вопросы.',
+    'Числа вместо слов: не «быстро», а «≤ 1 с для 95 % запросов при 300 одновременных пользователях».',
+    'Никаких «и т. д.», «и другие», «при необходимости», «удобно», «корректно» — ИИ дорисует их по-своему.',
+    'Каждое исключение: что случилось → что видит пользователь → код ошибки → что в базе.',
+    'Граница правила задана явно: «не позже чем за 2 часа» — 2 часа ровно это можно или нельзя?',
+    'Роли и права — таблицей «роль × действие», а не россыпью по тексту.',
+    'Схемы — в Mermaid (текстом), не картинками: ИИ читает текст.',
+    'Примеры JSON — настоящие, с данными из seed.json, а не «string».',
+    'Явный список «не делать» — ИИ любит добавлять лишнее.',
+    'Одно и то же называется одинаково во всём пакете: если «запись», то нигде не «бронь».',
+  ],
+
+  aiPrompt: `Ты — опытный бэкенд-разработчик. Тебе нужно реализовать фичу строго по пакету ниже и нельзя задавать вопросы аналитику. Код пока не пиши.
+
+Прочитай SPEC.md, openapi.yaml и seed.json и выдай:
+1. Места, где тебе пришлось бы угадывать: нет числа, нет кода ошибки, непонятно поведение в исключении, непонятно, кто имеет право. Для каждого — цитата и вопрос, который ты задал бы.
+2. Противоречия между разделами SPEC.md и между SPEC.md и openapi.yaml.
+3. Бизнес-правила без критериев приёмки и критерии приёмки, которые нельзя проверить автотестом.
+4. Что из стыков с соседними фичами непонятно: кто кого вызывает, что при повторе и сбое.
+5. Что ты добавил бы «от себя», потому что в пакете этого нет, а без этого фича не заработает.
+
+Отсортируй от самого опасного к мелочам. В конце оценка готовности пакета к разработке от 1 до 10.
+
+--- ПАКЕТ ---
+(вставь сюда SPEC.md, openapi.yaml, seed.json)`,
+
+  rubricPublic: [
+    ['Требования выявлены и учтены', 25, 'Важные факты из документов и интервью есть в спецификации; ничего не потеряно по дороге.'],
+    ['Противоречия и допущения', 10, 'Противоречия найдены и решены с тем, кто отвечает; допущения и открытые вопросы записаны честно.'],
+    ['Сценарии и бизнес-правила', 15, 'Основные потоки, альтернативы и исключения; правила с числами и границами.'],
+    ['Статусы и модель данных', 15, 'Все переходы и кто их делает; таблицы с типами и ограничениями, которые защищают правила.'],
+    ['API и события', 15, 'Контракт полный и однозначный: примеры, коды ошибок, повтор запроса, события.'],
+    ['Стыки с соседями', 10, 'Договорённости совпадают в обоих пакетах, базовый контракт не нарушен.'],
+    ['Критерии приёмки и тестовые данные', 5, 'Дано / Когда / Тогда с конкретными данными, негативные и граничные случаи.'],
+    ['Готовность для ИИ-разработчика', 5, 'Пакет можно отдать в разработку без единого вопроса к автору.'],
+  ],
+
+  checklist: [
+    'В разделе 1 — проблема с цифрами и измеримые цели.',
+    'Рамки: «входит», «не входит» (с причиной), допущения, открытые вопросы.',
+    'Матрица ролей: каждая роль × каждое действие.',
+    'Бизнес-правила пронумерованы, у каждого числа, граница и источник.',
+    'У каждого сценария есть исключения с кодами ошибок.',
+    'Статусная модель: диаграмма + таблица переходов, нет «тупиков» и «висящих» статусов.',
+    'Таблицы данных: типы, обязательность, уникальности, индексы, сроки хранения.',
+    'Деньги — в копейках целым числом, время — со смещением часового пояса.',
+    'У каждого эндпоинта — роль, пример запроса и ответа, коды ошибок.',
+    'POST, которые что-то создают или двигают деньги, принимают Idempotency-Key.',
+    'События: схема, кто публикует, кто слушает, что при повторе.',
+    'Раздел «Стыки» совпадает с пакетами соседей слово в слово.',
+    'Тексты уведомлений написаны полностью.',
+    'Нефункциональные требования — с числами.',
+    'Критерии приёмки покрывают каждое бизнес-правило, есть негативные и граничные случаи.',
+    'seed.json содержит данные для каждого критерия приёмки.',
+    'Нет слов «и т. д.», «быстро», «удобно», «при необходимости».',
+    'Пакет прогнан через нейросеть промптом проверки, найденные дыры закрыты.',
+  ],
+};
+
+// Общие тестовые данные платформы — одинаковые у всех троих.
+window.COMMON.seed = {
+  clinics: [
+    { id: 'c0000000-0000-4000-8000-000000000001', code: 'VAN', name: 'Лапа на Ванеева', address: 'Нижний Новгород, ул. Ванеева, 34', timezone: 'Europe/Moscow', openingHours: { mon: '08:00-21:00', tue: '08:00-21:00', wed: '08:00-21:00', thu: '08:00-21:00', fri: '08:00-21:00', sat: '08:00-21:00', sun: '08:00-21:00' }, phone: '+78312000101', features: ['surgery', 'homeVisits'] },
+    { id: 'c0000000-0000-4000-8000-000000000002', code: 'L24', name: 'Лапа-24', address: 'Нижний Новгород, ул. Белинского, 110', timezone: 'Europe/Moscow', openingHours: { all: '00:00-24:00' }, phone: '+78312000102', features: ['surgery', 'hospital', 'homeVisits', 'emergency24'] },
+    { id: 'c0000000-0000-4000-8000-000000000003', code: 'SRM', name: 'Лапа в Сормове', address: 'Нижний Новгород, ул. Коминтерна, 168', timezone: 'Europe/Moscow', openingHours: { all: '09:00-20:00' }, phone: '+78312000103', features: [] },
+    { id: 'c0000000-0000-4000-8000-000000000004', code: 'AVT', name: 'Лапа на Автозаводе', address: 'Нижний Новгород, пр. Ленина, 88', timezone: 'Europe/Moscow', openingHours: { all: '09:00-20:00' }, phone: '+78312000104', features: [] },
+    { id: 'c0000000-0000-4000-8000-000000000005', code: 'KST', name: 'Лапа в Кстове', address: 'Кстово, ул. Гражданская, 7', timezone: 'Europe/Moscow', openingHours: { all: '09:00-19:00' }, phone: '+78312000105', features: [] },
+  ],
+  staff: [
+    { id: '5a000000-0000-4000-8000-000000000001', fullName: 'Орлова Нина Ивановна', role: 'doctor', clinicIds: ['VAN'], specializations: ['therapist'] },
+    { id: '5a000000-0000-4000-8000-000000000002', fullName: 'Ковалёв Артём Андреевич', role: 'doctor', clinicIds: ['L24', 'VAN'], specializations: ['surgeon'] },
+    { id: '5a000000-0000-4000-8000-000000000003', fullName: 'Смирнова Елена Викторовна', role: 'doctor', clinicIds: ['VAN', 'L24'], specializations: ['cardiologist', 'ultrasound'] },
+    { id: '5a000000-0000-4000-8000-000000000004', fullName: 'Тихонов Олег Петрович', role: 'doctor', clinicIds: ['SRM'], specializations: ['exotic'] },
+    { id: '5a000000-0000-4000-8000-000000000005', fullName: 'Белкина Анна Сергеевна', role: 'doctor', clinicIds: ['VAN', 'AVT'], specializations: ['dermatologist'] },
+    { id: '5a000000-0000-4000-8000-000000000006', fullName: 'Гусев Павел Олегович', role: 'doctor', clinicIds: ['L24'], specializations: ['therapist'] },
+    { id: '5a000000-0000-4000-8000-000000000007', fullName: 'Ким Мария Юрьевна', role: 'doctor', clinicIds: ['SRM', 'VAN'], specializations: ['ophthalmologist'] },
+    { id: '5a000000-0000-4000-8000-000000000008', fullName: 'Лапин Игорь Николаевич', role: 'doctor', clinicIds: ['KST'], specializations: ['therapist'] },
+    { id: '5a000000-0000-4000-8000-000000000009', fullName: 'Зуева Дарья Михайловна', role: 'doctor', clinicIds: ['AVT'], specializations: ['therapist', 'ultrasound'] },
+    { id: '5a000000-0000-4000-8000-000000000010', fullName: 'Хабибуллин Руслан Ильдарович', role: 'doctor', clinicIds: ['L24'], specializations: ['dentist'] },
+    { id: '5a000000-0000-4000-8000-000000000011', fullName: 'Котова Светлана Игоревна', role: 'admin', clinicIds: ['VAN'], senior: true },
+    { id: '5a000000-0000-4000-8000-000000000012', fullName: 'Ершова Алина Дмитриевна', role: 'admin', clinicIds: ['L24'] },
+    { id: '5a000000-0000-4000-8000-000000000013', fullName: 'Морозова Юлия Александровна', role: 'assistant', clinicIds: ['L24'] },
+    { id: '5a000000-0000-4000-8000-000000000014', fullName: 'Рябов Сергей Викторович', role: 'manager', clinicIds: ['VAN'] },
+    { id: '5a000000-0000-4000-8000-000000000015', fullName: 'Белова Марина Сергеевна', role: 'director', clinicIds: ['VAN', 'L24', 'SRM', 'AVT', 'KST'] },
+  ],
+  owners: [
+    { id: '0b000000-0000-4000-8000-000000000001', fullName: 'Лебедева Ксения Андреевна', phone: '+79101234501', email: 'ksenia.l@example.ru' },
+    { id: '0b000000-0000-4000-8000-000000000002', fullName: 'Сомов Пётр Ильич', phone: '+79101234502', email: null },
+    { id: '0b000000-0000-4000-8000-000000000003', fullName: 'Орехов Дмитрий Сергеевич', phone: '+79101234503', email: 'mainecoon.nn@example.ru' },
+    { id: '0b000000-0000-4000-8000-000000000004', fullName: 'Петрова Анна Игоревна', phone: '+79101234504', email: 'anna.p@example.ru' },
+    { id: '0b000000-0000-4000-8000-000000000005', fullName: 'Новиков Игорь Валерьевич', phone: '+79101234505', email: null },
+  ],
+  pets: [
+    { id: '9e000000-0000-4000-8000-000000000001', name: 'Буся', species: 'cat', breed: 'беспородная', sex: 'female', birthDate: '2014-05-01', birthDateApprox: true, neutered: true, chipNumber: null, primaryOwnerId: '0b000000-0000-4000-8000-000000000001' },
+    { id: '9e000000-0000-4000-8000-000000000002', name: 'Граф', species: 'dog', breed: 'такса', sex: 'male', birthDate: '2017-09-12', birthDateApprox: false, neutered: false, chipNumber: '643094100123456', primaryOwnerId: '0b000000-0000-4000-8000-000000000002' },
+    { id: '9e000000-0000-4000-8000-000000000003', name: 'Атлас', species: 'cat', breed: 'мейн-кун', sex: 'male', birthDate: '2021-03-03', birthDateApprox: false, neutered: false, chipNumber: '643094100200001', primaryOwnerId: '0b000000-0000-4000-8000-000000000003' },
+    { id: '9e000000-0000-4000-8000-000000000004', name: 'Бриз', species: 'cat', breed: 'мейн-кун', sex: 'female', birthDate: '2022-06-20', birthDateApprox: false, neutered: false, chipNumber: '643094100200002', primaryOwnerId: '0b000000-0000-4000-8000-000000000003' },
+    { id: '9e000000-0000-4000-8000-000000000005', name: 'Гром', species: 'cat', breed: 'мейн-кун', sex: 'male', birthDate: '2026-07-15', birthDateApprox: false, neutered: false, chipNumber: '643094100200009', primaryOwnerId: '0b000000-0000-4000-8000-000000000003' },
+    { id: '9e000000-0000-4000-8000-000000000006', name: 'Кеша', species: 'bird', breed: 'волнистый попугай', sex: 'male', birthDate: '2023-01-01', birthDateApprox: true, neutered: false, chipNumber: null, primaryOwnerId: '0b000000-0000-4000-8000-000000000004' },
+    { id: '9e000000-0000-4000-8000-000000000007', name: 'Пух', species: 'rabbit', breed: 'карликовый', sex: 'male', birthDate: '2024-04-10', birthDateApprox: false, neutered: true, chipNumber: null, primaryOwnerId: '0b000000-0000-4000-8000-000000000004' },
+    { id: '9e000000-0000-4000-8000-000000000008', name: 'Рекс', species: 'dog', breed: 'немецкая овчарка', sex: 'male', birthDate: '2019-11-30', birthDateApprox: false, neutered: false, chipNumber: '643094100300777', primaryOwnerId: '0b000000-0000-4000-8000-000000000005' },
+  ],
+};
+
+// Шаблоны пакета — функции от фичи F (window.FEATURE) и записи из COMMON.features.
+window.COMMON.specTemplate = function (F, meta, seams) {
+  const others = seams.map(s => `- ${s.id} «${s.title}» — с ${s.partner}`).join('\n');
+  return `# ${F.title} — спецификация
+
+> Продукт «Лапа». Фича \`${F.code}\`. Автор: ${F.student}. Версия: 0.1. Дата: ГГГГ-ММ-ДД. Статус: черновик.
+> Пакет для разработчика: SPEC.md (этот файл), openapi.yaml, seed.json, interview-notes.md.
+> Таблицы — с префиксом \`${meta.tbl}\`, API — под \`${meta.api}\`. Общие соглашения продукта и платформа — по документу наставника, здесь не повторяются.
+
+<!-- Как пользоваться шаблоном: удаляй строки-подсказки в «> Подсказка», заменяй примеры своими.
+     Пример в каждом разделе — из ДРУГОЙ предметной области (прокат велосипедов), чтобы показать форму, а не ответ. -->
+
+## 0. Как читать пакет и что делать первым
+
+> Подсказка: 5–8 строк для разработчика. Порядок реализации (что сначала, что потом), какие разделы главные, где лежат примеры.
+
+## 1. Зачем
+
+### 1.1. Проблема сейчас
+> Подсказка: как сейчас и что болит — с цифрами из документов и интервью.
+
+### 1.2. Цели и как их измерим
+| Цель | Метрика | Сейчас | Целевое значение | Как считаем |
+|---|---|---|---|---|
+| _пример: меньше простоя велосипедов_ | _доля велосипедов в прокате_ | _55 %_ | _70 %_ | _ежедневно, отчёт за день_ |
+
+## 2. Рамки
+
+### 2.1. Входит в эту версию
+### 2.2. Не входит (почему и когда)
+### 2.3. Допущения
+> Подсказка: то, что решено без ответа заказчика. Каждое — с причиной, чтобы наставник мог оспорить.
+
+### 2.4. Открытые вопросы
+| № | Вопрос | Кому | Что делаем, пока нет ответа |
+|---|---|---|---|
+
+## 3. Роли и права
+
+| Действие | owner | admin | doctor | assistant | manager | director | system |
+|---|---|---|---|---|---|---|---|
+| _пример: выдать велосипед_ | — | ✔ своя точка | … | … | … | … | … |
+
+## 4. Глоссарий
+
+| Термин | Значение | Как называется в коде |
+|---|---|---|
+
+## 5. Бизнес-правила
+
+| ID | Правило | Параметры | Источник |
+|---|---|---|---|
+| BR-01 | _пример: прокат можно продлить онлайн, если до конца проката ≥ 15 минут_ | _minExtendBeforeEnd = 15 мин; ровно 15 — можно_ | _интервью: управляющий, 03.11_ |
+
+## 6. Сценарии использования
+
+### UC-01. _Название глаголом: «Записать питомца онлайн» / пример: «Взять велосипед»_
+- **Кто:** роль
+- **Предусловия:**
+- **Основной поток:**
+  1. …
+  2. …
+- **Альтернативы:** 2а. …
+- **Исключения:** 3б. Велосипед уже выдан → сообщение «…» → \`BIKE_TAKEN\` (409) → в базе ничего не меняется.
+- **Результат:**
+- **Правила:** BR-01, BR-04
+
+## 7. Статусная модель
+
+\`\`\`mermaid
+stateDiagram-v2
+    [*] --> Черновик
+    Черновик --> Активен: оплата прошла
+    Активен --> Завершён: велосипед сдан
+    Активен --> Отменён: отмена клиентом
+\`\`\`
+
+| Из | В | Кто / что переводит | Условие | Что происходит дальше (события, уведомления) |
+|---|---|---|---|---|
+
+## 8. Модель данных
+
+\`\`\`mermaid
+erDiagram
+    ${meta.tbl}example ||--o{ ${meta.tbl}example_item : "содержит"
+\`\`\`
+
+### ${meta.tbl}example
+| Поле | Тип | Обяз. | Ограничения | Описание |
+|---|---|---|---|---|
+| id | uuid | да | PK | |
+| created_at | timestamptz | да | default now() | |
+
+> Подсказка: индексы и уникальности, которые защищают правила; сроки хранения; что происходит при platform.owner.deleted.
+
+## 9. API
+
+| Метод | Путь | Кто | Что делает | Ошибки |
+|---|---|---|---|---|
+| POST | ${meta.api}/… | owner, admin | … | 409 \`…\`, 422 \`…\` |
+
+> Подсказка: по каждому эндпоинту — пример запроса и ответа JSON с данными из seed.json. Полный контракт — в openapi.yaml.
+
+### Коды ошибок
+| code | HTTP | Когда | Текст для пользователя |
+|---|---|---|---|
+
+## 10. События и стыки
+
+### 10.1. Публикую
+| Событие | Когда | data |
+|---|---|---|
+
+### 10.2. Слушаю
+| Событие | От кого | Что делаю | Что при повторе |
+|---|---|---|---|
+
+### 10.3. Стыки
+${others}
+
+> Подсказка: по каждому стыку — диаграмма последовательности и протокол стыковой встречи (дата, участники, решения). Текст стыка должен совпадать с пакетом соседа.
+
+\`\`\`mermaid
+sequenceDiagram
+    participant A as ${F.short}
+    participant B as Сосед
+    A->>B: запрос
+    B-->>A: ответ
+\`\`\`
+
+## 11. Экраны
+
+### Экран «…»
+- **Кто видит:**
+- **Поля:** | Поле | Откуда | Формат | Обяз. |
+- **Действия:**
+- **Состояния:** пусто / загрузка / ошибка / нет прав
+- **Макет:** (ASCII-набросок или описание)
+
+## 12. Уведомления
+
+| Шаблон | Когда | Кому | Канал | Текст | dedupKey |
+|---|---|---|---|---|---|
+
+## 13. Нефункциональные требования
+
+| ID | Требование | Значение | Как проверить |
+|---|---|---|---|
+| NFR-01 | _время ответа поиска_ | _≤ 1 с для 95 % запросов при 300 одновременных пользователях_ | _нагрузочный тест_ |
+
+## 14. Критерии приёмки
+
+### AC-01 (BR-01)
+- **Дано:** _данные из seed.json_
+- **Когда:**
+- **Тогда:**
+
+## 15. Тестовые данные
+> Подсказка: что лежит в seed.json и для каких AC.
+
+## 16. План поставки
+> Подсказка: что входит в первый рабочий срез (MVP), что следующим.
+
+## 17. Журнал решений
+| Дата | Вопрос | Решение | Кто решил |
+|---|---|---|---|
+`;
+};
+
+window.COMMON.openapiTemplate = function (F, meta) {
+  return `openapi: 3.1.0
+info:
+  title: Лапа — ${F.title}
+  version: 0.1.0
+  description: Фича ${F.code}. Автор ${F.student}. Соглашения продукта «Лапа» обязательны.
+servers:
+  - url: https://api.lapa.example/
+paths:
+  ${meta.api}/examples:
+    post:
+      summary: Пример — замени своими эндпоинтами
+      tags: [${F.code}]
+      security: [{ bearer: [] }]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ExampleCreate' }
+            example: { petId: 9e000000-0000-4000-8000-000000000001 }
+      responses:
+        '201':
+          description: Создано
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Example' }
+        '409':
+          description: Конфликт
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+              example: { type: about:blank, title: Слот уже занят, status: 409, code: SLOT_TAKEN, detail: '…' }
+components:
+  securitySchemes:
+    bearer: { type: http, scheme: bearer, bearerFormat: JWT }
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema: { type: string, format: uuid }
+  schemas:
+    Problem:
+      type: object
+      required: [type, title, status, code]
+      properties:
+        type: { type: string }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        code: { type: string, description: Машинный код ошибки UPPER_SNAKE }
+    ExampleCreate:
+      type: object
+      required: [petId]
+      properties:
+        petId: { type: string, format: uuid }
+    Example:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        createdAt: { type: string, format: date-time }
+`;
+};
+
+window.COMMON.readmeTemplate = function (F, meta) {
+  return `# Лапа — ${F.title}
+
+Пакет для разработчика. Автор: ${F.student}.
+
+| Файл | Что внутри |
+|---|---|
+| SPEC.md | спецификация фичи: правила, сценарии, статусы, данные, API, стыки, экраны, критерии приёмки |
+| openapi.yaml | контракт API под ${meta.api} |
+| seed.json | тестовые данные: общие данные платформы + данные фичи |
+| interview-notes.md | блокнот интервью из задания (откуда взялись требования) |
+
+Порядок реализации: …
+`;
+};
+</script>
+<script>window.FEATURE = {"code":"medcard","student":"Олеся","studentFile":"olesya","title":"Электронная медкарта питомца","short":"Медкарта","prefix":"MC","tagline":"одна карта питомца на всю сеть — для врача и для владельца","icon":"🩺","why":["Медкарта — сердце «Лапы». Здесь врач проводит каждый приём, здесь живёт история питомца, отсюда уходят услуги в счёт и напоминания о прививках. Если карта будет неудобной — врачи вернутся в Word. Если неточной — сеть проиграет первый же спор с владельцем.","Сейчас у каждой клиники своя база: «ВетБаза» в трёх клиниках, Excel и бумага в двух. 18 % питомцев за год ходили в две клиники сети и больше — и врач не видит, что было у коллег, назначает анализы повторно. Ветпаспорт с прививками — бумажный, у владельца, и его теряют. А «что сделал на приёме» врач пишет на бумажке — по сверке около 4 % услуг и препаратов до чека не доходит.","Твоя фича стоит посередине продукта: запись (Эльнара) приводит пациента к врачу, счёт (Никита) получает из визита услуги и препараты. Ошибёшься на стыках — владелец получит два одинаковых напоминания, а бухгалтерия — потерянные деньги. Поэтому здесь важно не только выслушать врачей, но и договориться с соседями."],"brief":{"from":"marina","subject":"Медкарта — одна на всех","paragraphs":["Олеся, добрый день! Мне сказали, медкарта — на вас. Коротко, в чём беда: у нас пять клиник и пять разных «карт». Где-то «ВетБаза», где-то Word, где-то тетрадка. Животное приходит в Сормово, а там понятия не имеют, что неделю назад его смотрели на Ванеева.","Хочу одну карту питомца на всю сеть. Чтобы врач открыл — и всё видно. Врачи жалуются, что сидят в компьютере дольше, чем смотрят животное, так что сделайте удобно, как в нормальных клиниках, — шаблоны там какие-нибудь, чтобы не печатать одно и то же. Ну и диагнозы чтобы были нормальные, а не кто во что горазд.","Владельцы пусть видят в приложении всё, что надо: прививки, анализы, что назначили. Чтобы не теряли ветпаспорта и не звонили на ресепшен «а когда нам прививка».","И главное для меня как для директора: всё, что врач сделал на приёме, должно попадать в счёт. Сейчас мы теряем на бумажках деньги. Это вы с Никитой обсудите, он делает счета. Юриста нашего тоже послушайте — он вечно чего-то опасается, но иногда по делу.","Запускаемся в марте на Ванеева и в «Лапе-24». Подробности — у Нины Ивановны, Артёма, Юли и Глеба. Пишите коротко, я на связи. М. С."]},"zone":["Визит (приём): из чего состоит, как начинается и чем заканчивается","Диагнозы, назначения, вес и прививки — с историей","Кто что видит в карте: сотрудники разных ролей, владелец, его семья","Исправления в медицинских записях и юридическая сторона","Файлы, операции и согласия владельца","Старые данные из «ВетБазы»","Стыки с записью (Эльнара) и счётом (Никита)"],"facts":[{"id":"MC-01","cat":"goal","crit":true,"text":"Цель: одна карта питомца на всю сеть (5 клиник). Сейчас у каждой клиники своя база («ВетБаза» VAN, L24, SRM — отдельно; AVT, KST — Excel и бумага). 18 % питомцев ходят в 2+ клиники; врач не видит чужие приёмы → повторные анализы."},{"id":"MC-02","cat":"data","crit":true,"text":"Визит = жалобы и анамнез; осмотр (вес, температура, пульс, частота дыхания, слизистые, свободный текст); диагноз; назначения (препарат, доза, способ, кратность, длительность); рекомендации; следующий визит (через сколько дней и зачем)."},{"id":"MC-03","cat":"scenario","text":"Шаблоны осмотра под тип приёма: вакцинация — 4 поля, первичный — полный осмотр. Сейчас запись в Word ~10 мин, цель — 3–5 мин. Последние назначения можно скопировать из прошлого визита."},{"id":"MC-04","cat":"rule","conflict":"MC-05","text":"Марина: диагноз — только из справочника сети (~400 диагнозов, ведёт главврач), иначе нет аналитики."},{"id":"MC-05","cat":"rule","conflict":"MC-04","text":"Нина: справочник всего не покрывает, искать в списке из 400 строк не будет — нужен свободный текст диагноза."},{"id":"MC-06","cat":"rule","crit":true,"text":"Решение Марины: предварительный диагноз — свободным текстом. Окончательный при закрытии визита — обязательно из справочника (поиск по первым буквам) + уточнение текстом. Нет подходящего — код «Другое» + текст; главврач раз в месяц разбирает «Другое»."},{"id":"MC-07","cat":"data","crit":true,"text":"Вес — с историей и графиком, от веса считаются дозы. Вес вносится на каждом визите; ассистент может внести вес и температуру до врача."},{"id":"MC-08","cat":"rule","crit":true,"text":"Вакцинация: препарат, серия, дата, действует до, врач, клиника. По сроку следующей — напоминание владельцу за 14 и за 3 дня со ссылкой на запись (стык S1)."},{"id":"MC-09","cat":"scenario","text":"Электронная выписка о вакцинациях в PDF для поездок и выставок, с QR-кодом: по нему на сайте «Лапы» проверяют подлинность."},{"id":"MC-10","cat":"rule","conflict":"MC-11","text":"Нина: хочет исправлять свою запись визита в любой момент — «опечаталась в дозе, а исправить не могу»."},{"id":"MC-11","cat":"legal","conflict":"MC-10","text":"Юрист: медзапись — документ для споров с владельцами; после закрытия менять нельзя."},{"id":"MC-12","cat":"status","crit":true,"text":"Решение юриста: врач закрывает (подписывает) визит. 24 ч после закрытия автор может исправить запись — каждая версия сохраняется (кто, когда, что было). После 24 ч — только «дополнение» с датой и автором, исходный текст не меняется."},{"id":"MC-13","cat":"role","crit":true,"text":"Доступ: врач — вся карта питомца из любой клиники сети; ассистент — вес, температура, назначения и их выполнение; администратор — только список визитов и вакцинаций без медицинских подробностей; управляющий — как администратор."},{"id":"MC-14","cat":"role","crit":true,"text":"Владелец в приложении видит визиты (диагноз, назначения, рекомендации), вакцинации и файлы анализов. НЕ видит служебную заметку врача («агрессивный владелец», «подозрение на жестокое обращение»)."},{"id":"MC-15","cat":"data","crit":true,"text":"Блок «Важно» вверху карты: аллергии, хронические заболевания, поведение («кусается — нужна муфта»). Виден всем сотрудникам, включая администратора."},{"id":"MC-16","cat":"role","text":"Основной владелец может дать «доверенному лицу» (муж, мама) доступ — смотреть карту и записывать питомца — и отозвать его."},{"id":"MC-17","cat":"scenario","crit":true,"text":"Передача питомца новому владельцу (заводчик продал котёнка): история вакцинаций и визитов переходит, контакты и служебные данные прежнего владельца новому не видны. Передаёт администратор по заявлению обоих или основной владелец в приложении."},{"id":"MC-18","cat":"scenario","text":"Заводчик (9 кошек): один экран — все его питомцы с ближайшими вакцинациями."},{"id":"MC-19","cat":"data","crit":true,"text":"Файлы к визиту: PDF «ВетЛаб» (приходят на почту клиники), фото, заключения УЗИ/рентгена (JPG). До 20 МБ на файл. DICOM остаётся на аппаратах — в карте только заключение и картинки. API «ВетЛаб» — 2027, не в этой версии."},{"id":"MC-20","cat":"rule","crit":true,"text":"Операция: протокол, анестезия (препарат, доза, время начала и окончания), согласие владельца на операцию и анестезию (фото/скан бумажного или подпись в приложении). Без согласия операцию в карте начать нельзя."},{"id":"MC-21","cat":"scope","text":"Стационар (лист назначений по часам, отметки выполнения) — Марина: в MVP не делаем, только визиты; стационар — этап 2. Юлия очень хочет."},{"id":"MC-22","cat":"seam","crit":true,"text":"Следующий визит: врач указывает «повторный через N дней» или «вакцинация до даты» → владельцу уходит предложение записаться (стык S1, medcard.followup.planned)."},{"id":"MC-23","cat":"scenario","crit":true,"text":"Визит создаётся при начале приёма по записи. Экстренный пациент без записи (L24 ночью) — визит создаётся вручную, без записи."},{"id":"MC-24","cat":"seam","crit":true,"text":"Услуги и препараты врач отмечает в визите из каталога (каталог — у счёта, Никита); при закрытии визита они уходят в счёт (стык S2). Сейчас бумажка → теряется 4 %."},{"id":"MC-25","cat":"migration","text":"Миграция: 3 базы «ВетБазы», дубли питомцев между клиниками. Марина: вакцинации — за всё время, визиты — за последние 2 года. Глеб: дубли искать по телефону владельца + кличке + виду; спорные разбирает администратор вручную."},{"id":"MC-26","cat":"scenario","text":"Поиск питомца: по кличке, телефону владельца, номеру чипа (15 цифр)."},{"id":"MC-27","cat":"legal","crit":true,"text":"Медзаписи хранятся не меньше 5 лет после последнего визита. Владелец удаляет ПДн (152-ФЗ) → карта питомца остаётся, но обезличивается (связь с владельцем убирается)."},{"id":"MC-28","cat":"legal","text":"Журнал просмотров: кто и когда открывал карту питомца — для споров."},{"id":"MC-29","cat":"scenario","text":"Нет интернета (KST) → врач пишет на бумаге, потом вносит визит задним числом с отметкой «внесено позже» и фактическим временем приёма."},{"id":"MC-30","cat":"nfr","text":"Карта открывается у врача не дольше 2 с; в пик одновременно работают ~40 врачей."},{"id":"MC-31","cat":"scenario","text":"Выписка после приёма: владелец сразу получает её в приложении / на email; если просит — администратор печатает (Пётр Ильич хочет бумагу)."},{"id":"MC-32","cat":"scope","text":"Не входит: стационар, дневник владельца (вес дома, фото, симптомы), интеграция с «ВетЛаб», телемедицина."}],"people":[{"id":"marina","name":"Марина Сергеевна Белова","role":"генеральный директор и сооснователь сети, бывший ветврач; заказчик продукта","emoji":"👩‍💼","hello":"Олеся, здравствуйте! У меня минут двадцать до планёрки, давайте по делу. Мне нужна одна карта питомца на всю сеть — а не пять огородов, как сейчас."},{"id":"nina","name":"Нина Ивановна Орлова","role":"врач-терапевт «Лапы на Ванеева», 25 лет стажа","emoji":"👩‍⚕️","hello":"Садитесь, только недолго — у меня в коридоре такса с ушами. Сразу предупреждаю: я не люблю компьютер, я люблю животных. Печатать — не моё."},{"id":"artem","name":"Артём Ковалёв","role":"хирург, заведующий хирургией «Лапы-24»","emoji":"🧑‍⚕️","hello":"Привет! Наконец-то кто-то занялся картой. Я за то, чтобы всё было в системе — особенно протоколы и согласия. У меня полчаса между операциями, спрашивай."},{"id":"yulia","name":"Юлия","role":"ассистент врача, стационар «Лапы-24»","emoji":"💉","hello":"Ой, проходите! Можно я буду говорить и капельницу ставить? Руки заняты, а голова свободна."},{"id":"lawyer","name":"Алексей Петрович","role":"юрист сети (аутсорс)","emoji":"⚖️","hello":"Добрый день. Сразу оговорюсь: всё, что попадёт в медкарту, однажды может оказаться в претензии или в суде. Давайте исходить из этого."},{"id":"gleb","name":"Глеб","role":"системный администратор, единственный ИТ-специалист сети","emoji":"🛠️","hello":"Ну, давай. Только если опять про «облака» — у нас в Кстове интернет как погода. Что хотела спросить?"},{"id":"ksenia","name":"Ксения","role":"владелица кошки Буси (12 лет, хроническая почечная недостаточность)","emoji":"🐈","hello":"Здравствуйте! Я в обеденный перерыв, с телефона, так что если пропаду — значит, начальник. Мы с Бусей у вас почти постоянные клиенты."},{"id":"dmitry","name":"Дмитрий","role":"заводчик мейн-кунов, ИП, 9 кошек","emoji":"🦁","hello":"Добрый день. У меня девять мейн-кунов, выставки и котята на продажу. Так что карта для меня — не про «удобно», а про деньги и репутацию питомника."}],"questions":[{"id":"marina-1","who":"marina","topic":"Как сейчас","kind":"good","min":4,"facts":["MC-01"],"q":"Что сейчас не так с медкартами и зачем сети одна карта?","a":"Да всё не так! У каждой клиники своя «ВетБаза», они друг про друга не знают, а Автозавод и Кстово вообще в Excel и тетрадках. Я посмотрела: 18 % питомцев за год были в двух наших клиниках и больше. Кошка сдала кровь на Ванеева, через неделю пришла в Сормово — там не видят, и снова кровь. Хозяин платит дважды, животное колют дважды, а мы выглядим как пять разных контор."},{"id":"marina-2","who":"marina","topic":"Правила","kind":"good","min":4,"facts":["MC-04"],"q":"Как врачи сейчас записывают диагноз и что вам нужно от этих записей?","a":"Каждый пишет как хочет: «ХПН», «хроническая почечная», «почки»… Я хочу знать, сколько у нас кошек с почками, сколько с дерматитами, — и не могу, потому что это сорок вариантов написания. Наш главврач ведёт справочник диагнозов, там около 400 позиций. Диагноз — только из справочника, иначе никакой аналитики не будет."},{"id":"marina-3","who":"marina","topic":"Деньги","kind":"good","min":4,"facts":["MC-24"],"q":"Как сейчас то, что врач сделал на приёме, попадает в чек?","a":"Через бумажку! Врач пишет на листочке «что сделал», администратор на кассе набирает вручную. По сверке около 4 % услуг и препаратов в чек не попадает — укол сделали, а не посчитали. Хочу, чтобы врач прямо в карте отмечал услуги и препараты из нашего каталога, и это само уходило в счёт. Каталог — это часть про счёт, её делает Никита, с ним и договаривайтесь."},{"id":"marina-4","who":"marina","topic":"Границы","kind":"good","min":3,"facts":["MC-32","MC-21"],"q":"Что точно не нужно делать в первой версии медкарты?","a":"Стационар — не сейчас. Юля мне все уши прожужжала про лист назначений по часам, я понимаю, но это второй этап, сначала приёмы. Дневник владельца — чтобы хозяин сам вписывал вес, фото, симптомы — тоже потом. С «ВетЛабом» напрямую стыковаться — в 2027-м, пока пусть врачи прикрепляют их PDF. И никакой телемедицины, видеоконсультации — это вообще 2028."},{"id":"marina-5","who":"marina","topic":"Уточнение","kind":"good","min":3,"facts":["MC-25"],"requires":["marina-1"],"q":"Вы сказали про старые базы. Какую историю из них нужно увидеть в новой карте?","a":"Прививки — за всё время: это и владельцам важно, и для выставок, и бешенство никто не отменял. Визиты — за последние два года, глубже всё равно никто не смотрит, а возни много. Как склеивать одного и того же кота из трёх баз — это к Глебу, он в «ВетБазе» каждый винтик знает."},{"id":"marina-6","who":"marina","topic":"Решение спора","kind":"conflict","min":5,"facts":["MC-06"],"requiresFacts":["MC-04","MC-05"],"q":"Нина Ивановна против диагноза только из справочника — говорит, не будет искать в списке из 400 строк. Как быть?","a":"Ох, Нина Ивановна… Ладно, давайте так. Пока идёт приём, предварительный диагноз пусть пишет как хочет, свободным текстом. А когда закрывает визит — окончательный диагноз обязательно из справочника, но с поиском по первым буквам, чтобы не листать 400 строк, и рядом можно уточнить своими словами. Нет подходящего — ставит «Другое» и пишет текстом; главврач раз в месяц разбирает эти «Другое» и пополняет справочник. Так и запишите."},{"id":"marina-7","who":"marina","topic":"Прививки","kind":"good","min":4,"facts":["MC-08"],"q":"Что для вас важно в прививках?","a":"Прививки — это и здоровье, и деньги, и бешенство, в конце концов. Сейчас всё в бумажном ветпаспорте у хозяина, а он его теряет — и мы не знаем, чем и когда прививали. Мне нужно видеть: какой препарат, серия, дата, до какого числа действует, кто прививал и в какой клинике. И пусть владельцу заранее приходит напоминание, когда подходит срок, — за две недели и за три дня, со ссылкой, чтобы сразу записаться."},{"id":"marina-8","who":"marina","topic":"Как сделать","kind":"solution","min":2,"facts":[],"q":"Медкарту делать отдельным приложением или внутри общего? И какие цвета взять?","a":"Да мне всё равно, честное слово. Пусть будет как удобнее врачу на приёме и хозяину в телефоне. Вы меня лучше спросите, что мне от карты нужно, — а цвета дизайнер выберет."},{"id":"marina-9","who":"marina","topic":"Доступ","kind":"good","min":4,"facts":["MC-13"],"q":"Кто из сотрудников что должен видеть в карте?","a":"Врач — всю карту, из любой клиники сети, ради этого всё и затеваем. Ассистенту нужно взвесить, температуру померить, посмотреть назначения и отметить, что сделал. Администратору на ресепшене диагнозы ни к чему — ему список визитов и прививок, чтобы записать и ответить на звонок. Управляющим — так же, как администратору: они клиникой управляют, а не лечат. Алексей Петрович на этом, кстати, очень настаивал."},{"id":"marina-10","who":"marina","topic":"Сроки","kind":"good","min":2,"facts":[],"q":"Когда и где запускаемся?","a":"Пилот — в марте 2027 на Ванеева и в «Лапе-24». Там «ВетБаза», люди привыкли к компьютеру, и поток большой — сразу увидим, где болит. К июню — все пять клиник, включая Сормово, Автозавод и Кстово. Кстово меня, честно, пугает: там интернет то есть, то нет."},{"id":"nina-1","who":"nina","topic":"Как сейчас","kind":"good","min":6,"facts":["MC-02"],"q":"Расскажите, как проходит обычный приём: что вы делаете и что записываете?","a":"Захожу, хозяин рассказывает, что случилось: жалобы, что ели, чем болели раньше. Потом смотрю: вес, температура, пульс, дыхание считаю, слизистые — розовые, бледные, — и всё, что увидела, своими словами. Потом диагноз. Потом назначения: какой препарат, сколько, как давать, сколько раз в день и сколько дней. Рекомендации — корм, режим. И в конце: «Придёте через десять дней, проверим кровь». Если хозяин при записи написал, что беспокоит, — хорошо бы это сразу видеть, а не переспрашивать."},{"id":"nina-2","who":"nina","topic":"Как сейчас","kind":"good","min":4,"facts":["MC-03"],"requires":["nina-1"],"q":"Сколько времени уходит на записи и что в этом самое неудобное?","a":"Минут десять на каждый приём сижу в Word — у меня там бланк, потом ещё в «ВетБазу» копирую, а в коридоре очередь. На прививку мне нужно-то четыре строчки, а я листаю весь бланк первичного. И одно и то же печатаю: у хроников назначения из раза в раз почти те же — я бы взяла из прошлого приёма и поправила. Если на всё уйдёт минуты три-пять — я ваша."},{"id":"nina-3","who":"nina","topic":"Правила","kind":"good","min":4,"facts":["MC-05"],"q":"Как вы формулируете диагноз в записи?","a":"Как вижу, так и пишу. Бывает, сразу не ясно — пишу «подозрение на панкреатит, исключить инородное тело». Марина Сергеевна хочет, чтобы всё было из списка, я этот список видела — четыреста строк! Я не буду искать в списке из 400 строк, пока кот на столе. И половины того, что я вижу, там всё равно нет. Мне нужен свободный текст."},{"id":"nina-4","who":"nina","topic":"Исключения","kind":"good","min":4,"facts":["MC-10"],"q":"Бывало, что вы находили ошибку в своей записи уже после приёма? Что делали?","a":"Да сто раз. На прошлой неделе написала 0,5 вместо 0,05 — опечаталась, хорошо, хозяйка переспросила по телефону. В Word я исправила, а в «ВетБазе» закрытый приём не исправишь — только Глеба звать. Я хочу исправлять свою запись в любой момент: я же врач, это моя запись."},{"id":"nina-5","who":"nina","topic":"Данные","kind":"good","min":4,"facts":["MC-15"],"q":"Что вам важно увидеть первым, когда открываете карту животного, которое видите впервые?","a":"Чем опасен — для меня и для него. Аллергия на препарат, хроника — почки, сердце, диабет. И поведение: «кусается — нужна муфта», «брать только в полотенце». Сейчас у нас это на бумажной карте красным маркером сверху. И пусть это видят все — и администратор, чтобы предупредил, и Юля, которая будет держать."},{"id":"nina-6","who":"nina","topic":"Владелец","kind":"good","min":3,"facts":["MC-31"],"q":"Что владелец получает на руки после приёма?","a":"Распечатку — что нашли, что назначили, как давать. Молодые её фотографируют и выбрасывают, а потом звонят: «а сколько капать?». Пётр Ильич, хозяин Графа, наоборот, бумагу бережёт, у него папка. Хорошо бы, чтобы выписка сразу была у хозяина в телефоне или на почте, а кто хочет бумагу — пусть администратор распечатает."},{"id":"nina-7","who":"nina","topic":"Уточнение","kind":"good","min":4,"facts":["MC-14"],"requires":["nina-6"],"q":"А всё, что вы пишете в карте, можно показывать владельцу?","a":"Нет, конечно! Я иногда пишу для коллег: «владелец агрессивный, говорить при свидетелях» или «подозрение на жестокое обращение — переломы разной давности». Если хозяин это прочитает — скандал, а в худшем случае животное больше не приведут. Диагноз, назначения, рекомендации, прививки, анализы — пусть видят. А такие пометки — только для врачей."},{"id":"nina-8","who":"nina","topic":"Следующий визит","kind":"good","min":3,"facts":["MC-22"],"q":"Как вы сейчас договариваетесь с владельцем о следующем приёме?","a":"Говорю устно: «Через десять дней на повторный» или «Прививку до такого-то числа». Половина забывает. Потом приходят через два месяца, когда уже всё плохо. Я бы отметила в карте «повторный через столько-то дней» или «прививка до даты» — и чтобы хозяину пришло предложение записаться. Сама обзванивать не буду, у меня приём."},{"id":"nina-9","who":"nina","topic":"Файлы","kind":"good","min":3,"facts":["MC-19"],"q":"Где сейчас хранятся анализы, заключения УЗИ, снимки?","a":"Анализы из «ВетЛаба» приходят PDF-кой на общую почту клиники, администратор распечатывает и вкладывает в бумажную карту — или не вкладывает. Заключения УЗИ и рентгена — картинки. Иногда фотографирую на телефон опухоль, чтобы через месяц сравнить. Хочу, чтобы всё это лежало прямо в приёме, к которому относится."},{"id":"nina-10","who":"nina","topic":"Как сделать","kind":"weak","min":2,"facts":[],"q":"Вам ведь будет удобнее, если всё будет в компьютере?","a":"Ну… удобнее, наверное. Если не будет тормозить. Вы лучше спросите, что мне мешает сейчас, — я вам больше расскажу."},{"id":"artem-1","who":"artem","topic":"Операции","kind":"good","min":5,"facts":["MC-20"],"q":"Как сейчас оформляется операция — от решения до момента, когда животное проснулось?","a":"Сначала консультация, потом смета и согласие владельца на операцию и наркоз — на бумажном бланке, с подписью. Без подписи я даже в операционную не захожу, это железно. Потом протокол: что делали, что нашли. Отдельно наркоз — препарат, доза, время начала и окончания, тот, кто ведёт наркоз, пишет минута в минуту. Сейчас всё это в папке, а папка — в шкафу в L24. Хочу, чтобы протокол и скан согласия жили в карте, а владелец мог бы и в приложении подписать."},{"id":"artem-2","who":"artem","topic":"Уточнение","kind":"good","min":4,"facts":["MC-24"],"requires":["artem-1"],"q":"А как препараты и расходники с операции попадают в счёт?","a":"Больная тема. На наркозе пишут «пропофол 4,5 мл», а администратор потом ищет, как это на кассе называется — во флаконах или в миллилитрах. Половину не находит. Смету я пишу «от — до», владелец подписывает её вместе с согласием; если по ходу выходим за верхнюю границу больше чем на 10 % — звоню владельцу. Я бы хотел, чтобы всё, что я отметил в операции, было из того же списка, что на кассе, с той же единицей, и уходило в счёт без переписывания."},{"id":"artem-3","who":"artem","topic":"Данные","kind":"good","min":3,"facts":["MC-07","MC-15"],"q":"Что тебе нужно увидеть в карте перед операцией?","a":"Свежий вес — наркоз считаю на килограмм, вес полугодовой давности для меня ничего не значит. Аллергии и хроника — сердце, почки: это вопрос, проснётся или нет. И что было раньше: оперировали ли, как перенёс наркоз — даже если это было в Сормове. Сейчас я узнаю это от хозяина, а хозяин путает."},{"id":"yulia-1","who":"yulia","topic":"Как сейчас","kind":"good","min":4,"facts":["MC-07"],"q":"Что вы делаете с животным до врача и после?","a":"Взвешиваю, меряю температуру — пока доктор с хозяином говорит, я уже кота на весы. Вес нужен всегда: от него доза, а у таких, как Буся, каждый грамм на счету — худеет, значит, хуже. Сейчас пишу вес на листочке, доктор переписывает, и иногда переписывает не туда. Хочу вносить вес и температуру сама, до врача, и видеть, как вес менялся, — графиком, а не листать."},{"id":"yulia-2","who":"yulia","topic":"Стационар","kind":"good","min":3,"facts":["MC-21"],"q":"Как сейчас ведётся стационар?","a":"На бумаге: лист назначений на каждого, по часам — что колоть, что капать, а я ставлю галочку и инициалы. Четырнадцать мест, ночью людей мало, листки путаются. Я очень-очень хочу это в системе. Но Марина Сергеевна сказала: стационар — второй этап, сначала приёмы. Обидно, но понимаю."},{"id":"yulia-3","who":"yulia","topic":"Исключения","kind":"good","min":4,"facts":["MC-23"],"q":"Как оформляете пациента, который приехал ночью без записи?","a":"Ночью в L24 никто не записывается — привезли собаку после машины в два часа ночи, и мы бегом. Сначала спасаем, потом бумажки. Сейчас доктор заводит приём в «ВетБазе» сам, без всякой записи. Днём проще: пришёл по записи — начали приём. Главное, чтобы система не требовала запись, когда на столе кровь."},{"id":"yulia-4","who":"yulia","topic":"Поиск","kind":"good","min":3,"facts":["MC-26"],"q":"Как вы находите карту нужного животного?","a":"По-разному. Хозяин говорит «Барсик» — а Барсиков у нас сотня. Тогда по телефону хозяина. Если найдёныш или хозяин в панике и номер не помнит — сканером читаем чип, там пятнадцать цифр. Вот по этим трём — кличка, телефон, чип — и надо искать."},{"id":"yulia-5","who":"yulia","topic":"Уточнение","kind":"good","min":3,"facts":["MC-13","MC-15"],"requires":["yulia-1"],"q":"А что из карты вам нужно видеть, а что — нет?","a":"Мне нужно: вес, температура, что назначили — и отметить, что я сделала: укол, капельницу. Диагнозы и рассуждения доктора мне не обязательно, это пусть доктора. А вот «кусается, нужна муфта» — это мне обязательно, это мои руки."},{"id":"yulia-6","who":"yulia","topic":"Как сделать","kind":"solution","min":2,"facts":[],"q":"Сделать вам большую зелёную кнопку «Взвесить»?","a":"Да хоть розовую! Мне не кнопка нужна. Мне главное — чтобы я вес внесла один раз и его потом никто руками не переписывал."},{"id":"yulia-7","who":"yulia","topic":"Исключения","kind":"good","min":3,"facts":[],"q":"Если вы взвесили кота до врача, а врач потом перевесил и вышло по-другому — какой вес правильный?","a":"Ой… Бывает: кот на весах вертится, я пишу 4,1, доктор потом взвешивает с рук — выходит 4,3. Какой правильный — не знаю, честно. Наверное, последний? Но это вы решите, как лучше, а я буду делать, как скажут."},{"id":"lawyer-1","who":"lawyer","topic":"Закон","kind":"good","min":4,"facts":["MC-11"],"q":"Почему для вас медицинская запись — особый документ?","a":"Потому что в споре с владельцем это наше главное доказательство. «Вы залечили мою собаку» — и мы открываем карту: что увидели, что назначили, в какой дозе. Если запись можно поправить задним числом, она перестаёт быть доказательством — нам скажут, что мы её подогнали. Поэтому моя позиция простая: закрытую запись менять нельзя."},{"id":"lawyer-2","who":"lawyer","topic":"Сроки","kind":"good","min":4,"facts":["MC-27"],"q":"Сколько хранить медицинские записи и что делать, если владелец просит удалить свои данные?","a":"Медицинские записи — не меньше пяти лет после последнего визита питомца. Персональные данные — другое дело: по закону о персональных данных владелец вправе потребовать их удалить. Но карта — это история животного, а не владельца. Её мы сохраняем, только убираем связь с человеком — чтобы нельзя было понять, чей это питомец."},{"id":"lawyer-3","who":"lawyer","topic":"Доступ","kind":"good","min":3,"facts":["MC-13"],"q":"Кто, на ваш взгляд, может смотреть медкарту в клинике?","a":"Врач — да, всю, и из любой клиники: животное лечит сеть, а не один кабинет. Ассистенту — то, что нужно для работы руками: вес, температура, назначения, отметки о выполнении. Администратору и управляющему медицинские подробности не нужны — список визитов и прививок, не более. Чем меньше людей видят диагноз, тем меньше у меня работы."},{"id":"lawyer-4","who":"lawyer","topic":"Уточнение","kind":"good","min":3,"facts":["MC-28"],"requires":["lawyer-1"],"q":"Были ли споры, где важно было, кто и что делал с картой?","a":"И не один. Последний — владелица кота с Ванеева утверждала, что о диагнозе «знала вся клиника» и это обсуждали при посторонних. Доказать ни то, ни другое мы не смогли: в «ВетБазе» не видно, кто открывал карту. Мне нужен ответ на вопрос «кто и когда смотрел карту». Не что изменил, а именно кто открывал."},{"id":"lawyer-5","who":"lawyer","topic":"Операции","kind":"good","min":3,"facts":["MC-20"],"q":"Что юридически важно при операциях?","a":"Согласие владельца на операцию и на наркоз — до операции, а не после. Подпись на бумаге — фото или скан в карту; подпись в приложении тоже годится, если видно, кто и когда подписал. Протокол операции и наркоза — что ввели, сколько, когда начали и закончили. Если согласия нет, а операция есть — я этот спор проиграю, даже не начав."},{"id":"lawyer-6","who":"lawyer","topic":"Уточнение","kind":"good","min":3,"facts":["MC-17"],"requires":["lawyer-3"],"q":"А если у питомца сменился хозяин — что новый хозяин может увидеть в карте?","a":"Историю здоровья животного — прививки, визиты — видеть должен, это в интересах животного. А вот телефон, фамилию прежнего хозяина, служебные пометки — нет, это чужие персональные данные. Передавать карту — только по заявлению обоих, через администратора, или если прежний хозяин сам сделал это из своего приложения."},{"id":"lawyer-7","who":"lawyer","topic":"Уточнение","kind":"good","min":3,"facts":["MC-29"],"requires":["lawyer-1"],"q":"Как быть, если запись о приёме внесли не сразу, а на следующий день?","a":"Бывает: в Кстове пропал интернет, врач принял на бумаге, внёс позже. Само по себе это нормально. Плохо, когда запись выглядит так, будто сделана во время приёма, а на самом деле — через сутки. Мне надо, чтобы было видно: когда приём был на самом деле и что запись внесена позже."},{"id":"lawyer-8","who":"lawyer","topic":"Решение спора","kind":"conflict","min":5,"facts":["MC-12"],"requiresFacts":["MC-10","MC-11"],"q":"Нина Ивановна хочет исправлять запись в любой момент — опечатка в дозе бывает. А вы говорите: после закрытия менять нельзя. Как совместить?","a":"Опечатки бывают, я не зверь. Давайте так. Врач закрывает визит — по сути, подписывает его. В течение 24 часов после закрытия автор может исправить запись, но каждая версия сохраняется: кто исправил, когда и что было до исправления. После 24 часов исходный текст не меняется вообще — можно только добавить «дополнение» с датой и автором. Тогда и врачу удобно, и мне есть что показать в суде."},{"id":"lawyer-9","who":"lawyer","topic":"Закон","kind":"weak","min":2,"facts":[],"q":"То есть из карты ничего и никогда нельзя удалять, правильно?","a":"Смотря что, смотря когда и смотря кому. На вопрос «да или нет» я отвечу «скорее нет», но толку вам от этого мало. Расскажите, какие ситуации вы имеете в виду, — тогда поговорим предметно."},{"id":"gleb-1","who":"gleb","topic":"Как сейчас","kind":"good","min":4,"facts":["MC-19"],"q":"Где сейчас лежат карты, анализы и снимки?","a":"Карты — в «ВетБазе», три отдельные базы: Ванеева, «Лапа-24», Сормово. Друг с другом не говорят, я пробовал. Анализы «ВетЛаб» шлёт PDF-ками на почту клиники. УЗИ и рентген пишут снимки в DICOM — это тяжёлые файлы, пусть живут на аппаратах, в карту тащить не надо: заключение и пару картинок JPG — хватит. Давай договоримся — до 20 мегабайт на файл. У «ВетЛаба» есть API, но Марина сказала — это 2027-й."},{"id":"gleb-2","who":"gleb","topic":"Миграция","kind":"good","min":4,"facts":["MC-25"],"requires":["gleb-1"],"q":"Что делать со старыми данными из трёх баз «ВетБазы»?","a":"Переносить, куда деваться. Только одна и та же кошка лежит в трёх базах по-разному: «Буся», «Бусинка», телефон с восьмёркой, без восьмёрки. Я бы искал дубли по телефону хозяина плюс кличка плюс вид. Что совпало — склеиваем, что спорное — пусть администратор руками разбирает, машина тут не судья. Сколько лет истории тащить — это у Марины спроси."},{"id":"gleb-3","who":"gleb","topic":"Сроки и объёмы","kind":"good","min":3,"facts":["MC-30"],"q":"Сколько людей одновременно будут работать с картами и как быстро всё должно открываться?","a":"Врачей у нас 38, в пик почти все на приёме — считай, человек сорок одновременно открывают карты. Если карта грузится дольше двух секунд — врач плюнет и вернётся в Word, я их знаю. Так что две секунды — это потолок, а не цель."},{"id":"gleb-4","who":"gleb","topic":"Сбои","kind":"good","min":3,"facts":["MC-29"],"requires":["gleb-3"],"q":"А что будет, если в клинике пропадёт интернет?","a":"В Кстове это не «если», а «когда» — раз-два в месяц на час и дольше. Врачи там всё равно примут: напишут на бумажке, а когда связь вернётся — будут вносить. Только время приёма тогда не «сейчас», а когда кот реально был на столе, и это должно быть видно. Как это сделать технически — пусть разработчик скажет, я в браузерах не мастер."},{"id":"gleb-5","who":"gleb","topic":"Миграция","kind":"good","min":2,"facts":[],"q":"А Excel и бумажные карты из Автозавода и Кстова тоже переносить?","a":"Понятия не имею. Там у каждого врача свой Excel, у кого-то тетрадка, у кого-то вообще только ветпаспорт у хозяина. Марина про это ничего не говорила. Решайте сами — только запишите, что решили, и согласуйте с ней, а то потом скажут, что это я виноват."},{"id":"ksenia-1","who":"ksenia","topic":"Как сейчас","kind":"good","min":3,"facts":["MC-31"],"q":"Расскажите, как вы ходите с Бусей в клинику и что потом остаётся у вас на руках?","a":"Мы ходим часто — у Буси почки, ей двенадцать. Раз в месяц кровь, иногда капельницы. После приёма мне дают распечатку, я её фотографирую, а бумажку теряю. Потом стою в аптеке и листаю галерею: «а сколько ей давать?». Хочу, чтобы выписка сразу приходила в приложение — ну или на почту."},{"id":"ksenia-2","who":"ksenia","topic":"Прививки","kind":"good","min":3,"facts":["MC-08"],"q":"Как вы помните, когда Бусе делать прививку?","a":"Никак не помню, честно. Ветпаспорт где-то в ящике, а в прошлом году мы пропустили бешенство на два месяца — заметила, только когда собрались на дачу. Было бы классно, если бы мне заранее приходило: «прививка через две недели» — и ещё раз ближе к делу, со ссылкой, чтобы сразу записаться. Я всё делаю с телефона."},{"id":"ksenia-3","who":"ksenia","topic":"Уточнение","kind":"good","min":3,"facts":["MC-16"],"requires":["ksenia-1"],"q":"Кто ещё в семье водит Бусю к врачу?","a":"Муж, когда я на работе, — я до семи. И мама иногда. А карта на мой номер, муж приходит — и начинается: «а вы кто?». Хочу, чтобы я могла дать мужу доступ: смотреть карту и записывать Бусю. А если вдруг поссоримся — забрать обратно, ха-ха."},{"id":"ksenia-4","who":"ksenia","topic":"Как сейчас","kind":"good","min":3,"facts":["MC-01"],"q":"Бывает, что вы ходите с Бусей в разные клиники «Лапы»?","a":"Постоянно. Я работаю до семи, поэтому иду туда, где есть вечернее время: то на Ванеева, то в Сормово. И каждый раз заново: «а какой у вас был креатинин?». В Сормове ей снова взяли кровь, хотя за неделю до этого сдавали на Ванеева. Буся кровь сдавать ненавидит, а я плачу дважды."},{"id":"ksenia-5","who":"ksenia","topic":"Приложение","kind":"weak","min":2,"facts":[],"q":"Вы бы хотели видеть карту Буси в телефоне, да?","a":"Да, конечно. А что в ней будет?"},{"id":"ksenia-6","who":"ksenia","topic":"Приложение","kind":"good","min":3,"facts":["MC-22"],"q":"Что бы вам больше всего помогло между приёмами?","a":"Чтобы мне напоминали, когда снова сдавать кровь: Нина Ивановна говорит «через месяц», а через месяц я уже не помню, с какого числа считать. И я дома каждую неделю взвешиваю Бусю на кухонных весах, записываю в заметки — вот бы это тоже было в карте, чтобы доктор видел. И фото, когда она плохо ест."},{"id":"dmitry-1","who":"dmitry","topic":"Как сейчас","kind":"good","min":3,"facts":["MC-18"],"q":"Как вы сейчас следите за здоровьем и прививками своих кошек?","a":"Девять мейн-кунов, у каждого бумажный ветпаспорт, плюс таблица в Excel, где я руками веду, кому когда прививка. Раз в квартал обязательно кто-то просрочен — и это минус выставка. Мне нужен один экран: все мои кошки и у кого ближайшая прививка. Не девять карточек по очереди открывать."},{"id":"dmitry-2","who":"dmitry","topic":"Выставки","kind":"good","min":3,"facts":["MC-08"],"q":"Что у вас проверяют на выставках и при продаже котят?","a":"На выставке ветконтроль смотрит паспорт: какая вакцина, серия, дата, до какого числа действует, подпись врача и печать клиники. Серию, кстати, проверяют — была история с поддельными наклейками. Покупатели котят тоже смотрят паспорт, особенно бешенство. А бумажный паспорт у меня один на кошку, и ездим мы по разным городам."},{"id":"dmitry-3","who":"dmitry","topic":"Уточнение","kind":"good","min":3,"facts":["MC-09"],"requires":["dmitry-2"],"q":"А как бы вам хотелось подтверждать прививки на выставке или в поездке?","a":"Электронной выпиской в PDF — открыл на телефоне, распечатал, если надо. Но PDF любой школьник нарисует, поэтому нужен QR-код: ветконтроль наводит телефон и на сайте «Лапы» видит, что выписка настоящая. Я такое видел на выставке в Хельсинки — очередь на ветконтроль шла втрое быстрее."},{"id":"dmitry-4","who":"dmitry","topic":"Уточнение","kind":"good","min":4,"facts":["MC-17"],"requires":["dmitry-1"],"q":"Что происходит с документами котёнка, когда вы его продаёте?","a":"Паспорт уезжает с новым хозяином — вместе с прививками. Если котёнок уже в вашей системе, хочу так же: передал — и вся его история прививок и визитов у нового хозяина. Но мой телефон, мои пометки и что я там платил — новому хозяину видеть незачем. Передавать я бы хотел сам, из приложения, а если покупатель — бабушка без смартфона, пусть администратор оформит, мы оба придём."}],"docs":[{"id":"d-word","title":"Распечатка приёма из Word","kind":"Документ","from":"Нина Ивановна","intro":"Нина Ивановна достала из папки свежую распечатку: «Вот так я пишу, только не смейтесь. Это я хозяйке отдавала».","facts":["MC-02","MC-15","MC-14"],"html":"<p><b>Ветеринарная клиника «Лапа на Ванеева»</b><br>г. Нижний Новгород, ул. Ванеева, 34</p>\n<p><b>ВНИМАНИЕ!!! ХПН. НПВС НЕ НАЗНАЧАТЬ. При заборе крови кусается — держать вдвоём, в полотенце.</b></p>\n<table>\n<tr><th>Дата приёма</th><td>14.09.2026, 18:40</td></tr>\n<tr><th>Пациент</th><td>Буся, кошка, метис, 12 лет, стерилизована</td></tr>\n<tr><th>Владелец</th><td>Ксения А. (телефон — в «ВетБазе»)</td></tr>\n<tr><th>Врач</th><td>Орлова Н. И., терапевт</td></tr>\n<tr><th>Приём</th><td>повторный <span class=\"muted\">(бланк «Первичный_2019.docx», лишние разделы не удалены)</span></td></tr>\n</table>\n<h4>Жалобы, анамнез</h4>\n<p>Со слов владелицы: 3 дня плохо ест, много пьёт, 1 раз рвота. ХПН на учёте с 2024 г. Кровь сдавали 12.08.2026 в «Лапе в Сормове» — результатов на руках нет, «креатинин был высокий».</p>\n<h4>Объективно</h4>\n<p>Вес 3,4 кг (в июле — 3,7). Т 38,3. Пульс 180. ЧДД 32. Слизистые бледно-розовые, суховаты. Обезвоживание ~5 %. Почки уменьшены, бугристые. Лимфоузлы б/о. Аускультация б/о.</p>\n<h4>Диагноз</h4>\n<p>ХПН, обострение. Ст. 2–3? Исключить пиелонефрит — взять мочу.</p>\n<h4>Назначения</h4>\n<table>\n<tr><th>Препарат</th><th>Доза</th><th>Способ</th><th>Кратность</th><th>Сколько дней</th></tr>\n<tr><td>Р-р Рингера</td><td>60 мл</td><td>п/к</td><td>1 р/д</td><td>5</td></tr>\n<tr><td>Маропитант</td><td>0,5 мл <span class=\"muted\">(зачёркнуто ручкой, сверху от руки «0,35!», без даты и подписи)</span></td><td>п/к</td><td>1 р/д</td><td>3</td></tr>\n<tr><td>Ипакитине</td><td>1 мерная ложка</td><td>с кормом</td><td>2 р/д</td><td>постоянно</td></tr>\n</table>\n<h4>Рекомендации</h4>\n<p>Лечебный корм «ренал». Вода — свободно, 2–3 миски по квартире. Взвешивать дома раз в неделю.</p>\n<h4>Следующий приём</h4>\n<p>Через 7 дней: кровь (креатинин, мочевина, фосфор), моча, осмотр. Записаться у администратора!</p>\n<p>Врач ____________ Орлова Н. И.</p>\n<p><span class=\"muted\">[Нижняя полоса листа отрезана ножницами. На корешке, который остался в папке у Нины Ивановны, от руки: «Хоз-ка очень тревожная, звонит каждый день. Говорить спокойно, без прогнозов. Подозреваю, даёт таблетки «от себя» — уточнить».]</span></p>"},{"id":"d-passport","title":"Ветпаспорт и таблица питомника","kind":"Фото","from":"Дмитрий","intro":"Дмитрий прислал в мессенджер фото разворота ветпаспорта своего кота и скриншот таблицы, которую ведёт сам.","facts":["MC-08","MC-18"],"html":"<p><b>Фото 1. Ветеринарный паспорт, разворот «Вакцинация против бешенства»</b></p>\n<p>Кличка: Один (Odin Maine Wood) · кот · мейн-кун · чёрный мраморный · микрочип 643094100331190</p>\n<table>\n<tr><th>Дата</th><th>Вакцина (наклейка)</th><th>Серия</th><th>Действительно до</th><th>Ветврач</th><th>Печать</th></tr>\n<tr><td>18.10.2023</td><td>Нобивак Рабиес</td><td>A231B02</td><td>18.10.2024</td><td>подпись, «Орлова»</td><td>«Лапа на Ванеева»</td></tr>\n<tr><td>02.11.2024</td><td>Рабикан</td><td>115-0924</td><td>02.11.2025</td><td>подпись неразборчива</td><td>«Лапа в Сормове»</td></tr>\n<tr><td>20.10.2025</td><td>Нобивак Рабиес</td><td><span class=\"muted\">наклейка оторвана</span></td><td>20.10.2026</td><td>подпись неразборчива</td><td>«Лапа-24»</td></tr>\n</table>\n<p><b>Фото 2. Скриншот «Прививки — питомник Maine Wood.xlsx»</b></p>\n<table>\n<tr><th>Кошка</th><th>Пол</th><th>Г. р.</th><th>Бешенство до</th><th>Комплексная до</th><th>Где делали</th><th>Пометки</th></tr>\n<tr><td>Один</td><td>кот</td><td>2018</td><td>20.10.2026</td><td>20.10.2026</td><td>VAN, SRM, L24</td><td>выставка 25.10 — УСПЕТЬ!</td></tr>\n<tr><td>Тор</td><td>кот</td><td>2020</td><td>10.11.2026</td><td>10.11.2026</td><td>VAN</td><td></td></tr>\n<tr><td>Ингрид</td><td>кошка</td><td>2021</td><td>02.04.2027</td><td>15.01.2027</td><td>SRM</td><td></td></tr>\n<tr><td>Фрейя</td><td>кошка</td><td>2022</td><td>28.10.2026</td><td>28.10.2026</td><td>SRM</td><td>котята 05.2026 — когда прививать её саму?</td></tr>\n<tr><td>Сага</td><td>кошка</td><td>2019</td><td>14.09.2026</td><td>01.02.2027</td><td>L24</td><td>просрочено!! не пустили на выставку</td></tr>\n<tr><td>Локи</td><td>кот</td><td>2023</td><td>05.12.2026</td><td>05.12.2026</td><td>VAN</td><td></td></tr>\n<tr><td>Хельга</td><td>кошка</td><td>2024</td><td>30.01.2027</td><td>30.01.2027</td><td>SRM</td><td></td></tr>\n<tr><td>Ирма</td><td>кошка</td><td>2020</td><td>?</td><td>?</td><td>—</td><td>паспорт у жены на даче</td></tr>\n<tr><td>Бальдр</td><td>кот</td><td>2025</td><td>18.03.2027</td><td>18.03.2027</td><td>VAN</td><td></td></tr>\n</table>\n<p><span class=\"muted\">Под таблицей: «Котята Фрейи (5 шт.): 3 проданы, паспорта отдал новым хозяевам; 2 ещё у нас, вторая прививка 20.10».</span></p>"},{"id":"d-vetbaza","title":"Выгрузка из «ВетБазы»: одна кошка в трёх базах","kind":"Выгрузка","from":"Глеб","intro":"Глеб выгрузил из трёх баз «ВетБазы» всё, что нашёл по телефонам Ксении и Дмитрия, и склеил в одну таблицу: «На, полюбуйся».","facts":["MC-25","MC-01"],"html":"<p><code>vetbaza_pets_export.csv</code> — склеено вручную из трёх баз (VAN, L24, SRM), поиск по телефону и по чипу.</p>\n<table>\n<tr><th>база</th><th>id</th><th>кличка</th><th>вид</th><th>порода</th><th>д. р.</th><th>тел_владельца</th><th>владелец</th><th>чип</th><th>посл_визит</th><th>визитов</th></tr>\n<tr><td>VAN</td><td>14872</td><td>Буся</td><td>кошка</td><td>метис</td><td>03.2014</td><td>89000001234</td><td>Ксения А.</td><td></td><td>14.09.2026</td><td>37</td></tr>\n<tr><td>SRM</td><td>3310</td><td>Бусинка</td><td>кот</td><td></td><td>2014</td><td>+7 900 000-12-34</td><td>Ксения</td><td></td><td>12.08.2026</td><td>6</td></tr>\n<tr><td>L24</td><td>22051</td><td>БУСЯ</td><td>кошка</td><td>б/п</td><td></td><td>9000001234</td><td>А-ва К.</td><td></td><td>03.01.2025</td><td>1</td></tr>\n<tr><td>VAN</td><td>9077</td><td>Буся</td><td>собака</td><td>той-терьер</td><td>2017</td><td>89000005678</td><td>Мария П.</td><td></td><td>30.06.2026</td><td>12</td></tr>\n<tr><td>VAN</td><td>12004</td><td>Один</td><td>кот</td><td>мейн кун</td><td>2018</td><td>89000009900</td><td>Дмитрий</td><td>643094100331190</td><td>05.06.2025</td><td>9</td></tr>\n<tr><td>SRM</td><td>2988</td><td>Odin Maine Wood</td><td>кошка</td><td>мейн-кун</td><td>2018</td><td>89000007788</td><td>ИП Д.</td><td>643094100331190</td><td>02.11.2024</td><td>3</td></tr>\n<tr><td>L24</td><td>19530</td><td>Один</td><td>кот</td><td>MCO</td><td></td><td>89000009900</td><td>Дмитрий</td><td></td><td>20.10.2025</td><td>1</td></tr>\n</table>\n<p>Заметки Глеба на полях:</p>\n<ul>\n<li>Телефоны пишут кто как: с 8, с +7, без кода, с пробелами и дефисами.</li>\n<li>В Сормове «кот/кошка» иногда вбивают в поле «вид» вместо пола.</li>\n<li>Отдельной таблицы прививок в «ВетБазе» нет — они внутри визитов, текстом: «Нобивак Рабиес, с. A231B02».</li>\n<li>Чип заполнен редко. Где заполнен — совпадает, даже когда телефоны разные.</li>\n<li>В VAN история визитов лет за десять, в Сормове — поменьше. Тащить всё — долго.</li>\n<li>Всего в базах около 31 тыс. питомцев на 22 тыс. владельцев — сколько из них дублей, не считал.</li>\n<li>Автозавод и Кстово — Excel и бумага, в выгрузку не попали.</li>\n</ul>"},{"id":"d-claim","title":"Письмо юриста о претензии владельца","kind":"Письмо","from":"Алексей Петрович","intro":"Марина Сергеевна переслала письмо юриста с припиской: «Олеся, почитайте, чтобы такого больше не было».","facts":["MC-11","MC-29","MC-28"],"html":"<p><b>От:</b> Алексей Петрович, юрист<br><b>Кому:</b> М. С. Беловой<br><b>Тема:</b> Претензия гр. Н. по собаке Рекс — итоги и выводы</p>\n<p>Марина Сергеевна, добрый день.</p>\n<p>Коротко по претензии гр. Н. (собака Рекс, лабрадор, 7 лет, приём в «Лапе в Кстове» 14.08.2026 в 16:30). Владелец утверждает, что врач назначил тройную дозу препарата, после чего у собаки была рвота, и требует возместить лечение в сторонней клинике.</p>\n<p>Что мы смогли предъявить и почему этого оказалось мало:</p>\n<ul>\n<li>Запись приёма из Excel-файла клиники: доза указана верная. Однако файл изменён 15.08.2026 в 10:12. Врач пояснила, что 14.08 в Кстове с обеда не было интернета, она приняла собаку «на листочке» и перенесла запись утром. Листочек не сохранился.</li>\n<li>Представитель владельца заявил, что запись «исправили после жалобы». Опровергнуть нам нечем: в файле не видно, что было до изменения, кто и когда его вносил.</li>\n<li>Владелец также заявил, что о диагнозе собаки «судачили в регистратуре». Кто открывал файл и когда — установить невозможно.</li>\n</ul>\n<p>Итог: урегулировали миром, вернули стоимость приёма. Сумма небольшая, но прецедент неприятный, и следующий может быть дороже.</p>\n<p>Прошу учесть в новой системе. Медицинская запись после завершения приёма — документ, на который мы ссылаемся в споре; если её можно незаметно поменять, это уже не доказательство. Запись, внесённая не во время приёма, должна быть видна как таковая — с указанием, когда на самом деле был приём. И нужен ответ на вопрос «кто смотрел карту».</p>\n<p>С уважением, А. П.</p>"},{"id":"d-hospital","title":"Лист назначений стационара","kind":"Фото","from":"Юлия","intro":"Юлия сфотографировала лист назначений с поста стационара L24 — «пока не выбросили».","facts":["MC-07","MC-23"],"html":"<p><b>«Лапа-24» · стационар · лист назначений · бокс 7</b></p>\n<p>Пациент: Джек, пёс, метис, ~5 лет. Поступил 03.10.2026 в 02:40 — экстренно, без записи (сбит машиной). Принял дежурный врач. Оперировал Ковалёв А. (03.10, 04:10–05:30).</p>\n<table>\n<tr><th>Дата</th><th>Вес</th><th>Кто взвешивал</th></tr>\n<tr><td>03.10</td><td>24,0 кг</td><td>со слов хозяина</td></tr>\n<tr><td>04.10</td><td>22,6 кг</td><td>Ю.</td></tr>\n<tr><td>05.10</td><td>22,4 кг</td><td>Ю.</td></tr>\n</table>\n<table>\n<tr><th>Назначение</th><th>Доза</th><th>08:00</th><th>12:00</th><th>16:00</th><th>20:00</th><th>00:00</th><th>04:00</th></tr>\n<tr><td>Рингер в/в капельно</td><td>40 мл/ч</td><td>✓ Ю.</td><td>✓ Ю.</td><td>✓</td><td>✓ А.</td><td>✓</td><td>—</td></tr>\n<tr><td>Цефтриаксон в/в</td><td>600 мг <span class=\"muted\">(считали на 24 кг)</span></td><td>✓ Ю.</td><td></td><td></td><td>✓</td><td></td><td></td></tr>\n<tr><td>Обезболивание</td><td>по схеме врача</td><td>✓ Ю.</td><td></td><td>✓ Ю.</td><td></td><td>✓</td><td></td></tr>\n<tr><td>Выгул, моча</td><td></td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td></td><td></td></tr>\n</table>\n<p><span class=\"muted\">На полях рукой Юлии: «Вес упал на 1,6 кг — дозы пересчитать? Спросить А. К.» · «В 20:00 галочка есть, подписи нет — кто колол???» · «Перенести в „ВетБазу“ — к утру не успела».</span></p>"}],"seams":[{"id":"S1","with":"booking","partner":"Эльнара","title":"Запись ↔ Медкарта","give":["Событие medcard.followup.planned — врач запланировал повторный приём или вакцинацию","GET /api/v1/medcard/pets/{petId}/specialist-visits — визиты питомца к специалисту (запись проверяет, можно ли онлайн на повторный к узкому специалисту)","Факт начала и закрытия приёма — каким способом, договориться"],"take":["События записи booking.appointment.created | rescheduled | cancelled | checked_in | no_show","Данные записи: appointmentId, petId, ownerId, clinicId, doctorId, serviceCode, startsAt, endsAt, ownerComment («что беспокоит»)","Список записей врача на день — откуда и как, договориться"],"base":"<p>Базовый контракт задал наставник — его нельзя ломать:</p>\n<pre>booking публикует:\n  booking.appointment.created | rescheduled | cancelled | checked_in | no_show\n  data: appointmentId, petId, ownerId, clinicId, doctorId,\n        serviceCode, startsAt, endsAt, ownerComment\n\nmedcard публикует:\n  medcard.followup.planned\n  {petId, reason: revisit|vaccination, dueDate, serviceCode, doctorId?, clinicId?}\n\nmedcard даёт:\n  GET /api/v1/medcard/pets/{petId}/specialist-visits?specialization=&sinceDate=\n  → список визитов к специалисту</pre>","agree":["Где врач видит свой день (список записей) и откуда открывает приём — экран какой фичи?","Кто и как переводит запись в «на приёме» и «завершена»; как визит в медкарте связан с записью; что с экстренными приёмами без записи.","Кто отправляет владельцу напоминание о повторном приёме и вакцинации, чтобы владелец не получил два сообщения.","Что из записи попадает в медкарту (комментарий владельца «что беспокоит» → жалоба)."]},{"id":"S2","with":"billing","partner":"Никита","title":"Медкарта ↔ Счёт","give":["Событие medcard.visit.closed со списком оказанных услуг и использованных препаратов items: [{itemCode, qty, unit}]","Что происходит со списком позиций, если врач исправил визит после закрытия, — договориться","Согласие владельца на операцию — как оно связано со сметой, договориться"],"take":["Каталог услуг, препаратов и товаров: GET /api/v1/billing/catalog/items?type=service|drug|goods&q=&clinicId=","Тип позиции и единица измерения из каталога","Смета на операцию — где живёт и как на неё сослаться, договориться"],"base":"<p>Базовый контракт задал наставник — его нельзя ломать:</p>\n<pre>billing ведёт каталог:\n  GET /api/v1/billing/catalog/items?type=service|drug|goods&q=&clinicId=\n\nmedcard публикует:\n  medcard.visit.closed\n  {visitId, petId, ownerId, clinicId, doctorId, appointmentId?,\n   startedAt, closedAt, items: [{itemCode, qty, unit}]}</pre>","agree":["Что делать, если врач исправил визит после закрытия и список услуг изменился — до оплаты и после оплаты.","Смета на операцию: где составляется, где хранится, как связана с согласием владельца на операцию.","Стационар: счёт копится несколько дней — как медкарта передаёт услуги по дням.","Единицы измерения препаратов (мл, таблетка, доза) — чьи и как согласованы."]}],"hints":{"context":["Начни с письма Марины Сергеевны и раздела «Зачем»: сформулируй одной фразой, чью боль снимает медкарта и как Марина поймёт, что всё получилось.","Раздели зоны: что даёт платформа (питомец, владелец, вход и роли, файлы, уведомления, аудит), что делают соседи (запись — Эльнара, счёт и каталог — Никита) и что остаётся тебе. Кличка, вид и чип питомца — не твои таблицы.","Почти ответ: цель — одна карта на 5 клиник вместо трёх баз «ВетБазы», Excel и бумаги (18 % питомцев ходят в 2+ клиники); визит заполняется за 3–5 минут вместо 10; всё, что врач сделал, уходит в счёт (утечка 4 % → меньше 1 %). Пользователи: врач, ассистент, администратор, управляющий, владелец и тот, кому владелец доверил питомца. Пилот — март 2027, VAN и L24."],"docs":["Документы — не картинки для настроения. Читай их как улики: какие в них есть поля, о которых никто не сказал на интервью, и что в них испорчено — зачёркнуто, задвоено, отрезано.","Сравни распечатку Нины Ивановны с выгрузкой Глеба: как одно и то же животное записано в разных базах? Посмотри, что Нина Ивановна НЕ отдала хозяйке. В письме юриста ищи, чего не хватило, чтобы выиграть спор.","Почти ответ: Word — структура визита, предупреждение сверху, доза исправлена ручкой без даты и автора, отрезанная «пометка для себя»; паспорт — серия и «действует до», просрочки, 9 кошек в самодельной таблице, проданные котята; выгрузка — дубли с разными кличками, видами, форматами телефона и одинаковым чипом, прививки текстом внутри визитов; письмо — запись изменена задним числом без истории, нет журнала просмотров; лист стационара — пациент ночью без записи и вес, от которого считают дозы."],"interview":["Начинай с открытых вопросов: «как сейчас?», «что бывает, когда…?», «расскажите про последний случай». Закрытые вопросы («вам ведь удобно?») и вопросы про кнопки дают мало — попробуй и сравни.","Часть важного открывается только уточняющими вопросами. Возвращайся к людям: что из карты нельзя показывать владельцу, кто ещё в семье водит питомца, что с картой при продаже котёнка, что делает врач без интернета, кто открывал карту, что делать со старыми базами.","Почти ответ: ищи два спора — про диагноз (Марина ↔ Нина) и про исправление записей (Нина ↔ юрист). Когда обе позиции спора в блокноте, появится вопрос к тому, кто вправе решить. Не уходи без Глеба (старые базы, нагрузка, интернет), Дмитрия (выставки, продажа котят), Ксении (семья), юриста (сроки хранения, журнал, запись задним числом). Если человек говорит «решайте сами» — это допущение, запиши его."],"analysis":["Разложи блокнот по категориям: цели, рамки, роли, правила, данные, статусы, сценарии, нефункциональные требования, стыки, юридическое, миграция. Пустая категория — сигнал, что кого-то не спросили.","Для каждого спора запиши обе позиции, кто принял решение и почему. Для каждого «не знаю» — допущение, которое согласуешь с Мариной. Отдельно — просьбы вне рамок (стационар, дневник владельца), чтобы их не потерять и не сделать по ошибке.","Почти ответ: два решённых спора (MC-06, MC-12), минимум два допущения (Excel и бумага AVT/KST при миграции; какой вес считать, если ассистент и врач взвесили по-разному) и матрица доступа: по строкам — врач, ассистент, администратор, управляющий, владелец, доверенное лицо, новый владелец после передачи; по столбцам — блок «Важно», служебная заметка, диагноз, назначения, вес, вакцинации, файлы."],"seams":["Базовый контракт S1 и S2 менять нельзя — его задал наставник. Выпиши вопросы «Договорить» и приходи на встречу с Эльнарой и Никитой со своим предложением, а не с пустыми руками.","S1: на каком экране врач видит свой день, кто переводит запись в «на приёме» и «завершена», как экстренный визит живёт без записи, кто шлёт напоминание о прививке и повторе. S2: что делать со счётом, если врач исправил визит после закрытия, где живёт смета, а где согласие, чьи единицы препаратов. И подумай, кому ещё, кроме тебя, нужно право «доверенного лица».","Почти ответ: «Мой день» и «Начать приём» логично держать в медкарте, читая записи через API записи; завершение записи — по событию закрытия визита; экстренный визит — без appointmentId; напоминание шлёт тот, кто знает график прививок, а второй молчит. Исправление после закрытия → отдельное событие с полным новым списком позиций; до оплаты и после оплаты у счёта разные действия. Смета — у счёта, согласие — у тебя со ссылкой на смету. Запиши стыки одинаково в оба пакета."],"scenarios":["Опиши основной сценарий: врач открыл свой день → начал приём по записи → ассистент внёс вес → врач заполнил визит → закрыл → услуги ушли в счёт, владелец получил выписку, запланирован следующий визит.","Потом альтернативы и исключения: экстренный без записи, приём внесён позже (нет интернета), исправление после закрытия, дополнение через несколько дней, операция без согласия, передача котёнка новому владельцу, доверенное лицо, удаление данных владельца, визит открыт не тому питомцу.","Почти ответ: у каждого сценария — кто (роль), предусловие (статус визита), шаги, результат и что уходит наружу (событие, уведомление, аудит). Правила вынеси в нумерованный список и ссылайся на них из шагов: окончательный диагноз из справочника при закрытии; исправлять — только автор и только в окне; потом — только дополнение; без согласия операцию не начать; служебная заметка не уходит владельцу ни в каком виде."],"data":["Нарисуй сущности медкарты и связи между ними. Питомец и владелец живут в платформе — у тебя только ссылки petId и ownerId.","Подумай про историю: версии визита, дополнения, история веса, журнал просмотров. Что нужно сохранить «снимком» на момент визита — клинику, врача, его специализацию, владельца? Что станет с ownerId после удаления данных владельца?","Почти ответ: визит (предварительный и окончательный диагноз, отметка «внесено позже» и фактическое время), осмотр, назначения, позиции из каталога (itemCode, qty с точностью 0,1, unit из каталога), версии визита, дополнения, справочник диагнозов с кодом «Другое», вес, вакцинации, файлы (fileId платформы), блок «Важно», операция и согласие (со ссылкой на смету счёта), доверенные лица, передачи, журнал просмотров, выписки с кодом для QR. Плюс статусная модель визита: переходы и кто их делает."],"api":["Следуй соглашениям: /api/v1/medcard/..., UUID, время ISO 8601 со смещением, ошибки problem+json с машинным кодом, Idempotency-Key на всё, что создаёт записи, пагинация limit/cursor.","Действия, которые не CRUD, — подресурсом: закрыть визит, добавить дополнение, начать операцию, передать питомца. Для каждого эндпоинта — какие роли и что каждая роль видит в ответе (владельцу и администратору — разное).","Почти ответ: карта питомца, поиск, «Мой день», начать / получить / изменить / закрыть визит, версии, дополнения, позиции из каталога, файлы, вес, вакцинации, выписка PDF и публичная проверка по коду из QR, блок «Важно», операция и согласие, доверенные лица, передача, журнал просмотров, specialist-visits для записи, список питомцев владельца с ближайшими прививками. События: visit.closed, visit.amended, followup.planned (+ по желанию visit.started). Коды ошибок вида VISIT_LOCKED, NOT_VISIT_AUTHOR, FINAL_DIAGNOSIS_REQUIRED, CONSENT_REQUIRED, FILE_TOO_LARGE."],"nfr":["Выпиши все числа из блокнота: сколько врачей одновременно, как быстро открывается карта, размер файлов, сроки хранения.","Нефункциональные требования — не только скорость: что происходит без интернета, кто и что видит, что пишется в аудит, что делается по запросу на удаление персональных данных, когда работают клиники (L24 — круглосуточно).","Почти ответ: карта открывается не дольше 2 с (p95) при ~40 одновременных врачах; файл до 20 МБ; медзаписи хранятся не меньше 5 лет после последнего визита; по platform.owner.deleted — обезличивание, а не удаление; журнал просмотров; закрытие, исправления, дополнения, передача — в аудит платформы; работа круглосуточно (L24); без интернета — ввод задним числом с отметкой «внесено позже», а не офлайн-приложение (решишь иначе — обоснуй)."],"acceptance":["Пиши критерии в формате «Дано / Когда / Тогда» с конкретными людьми, временем и числами, а не «система работает корректно».","Покрой правила, на которых легко ошибиться: окно на исправление, кто видит служебную заметку, видит ли администратор диагноз, операция без согласия, передача котёнка, экстренный визит без записи, повтор одного и того же события.","Почти ответ: заведи тестовых персонажей — Буся (кошка, 12 лет, ХПН, визиты в VAN и SRM, дубли в старых базах), мейн-куны Дмитрия (9 кошек, котёнок на продажу), собака ночью в L24 без записи, приём в KST без интернета. Пример: «Дано: визит Буси закрыт Орловой 03.11.2026 в 18:40. Когда: Орлова меняет дозу 04.11.2026 в 18:45. Тогда: изменение отклонено с кодом ошибки, доступно только дополнение»."],"aicheck":["Перечитай пакет глазами ИИ-разработчика: он сделает ровно то, что написано, а всё «понятное и так» угадает по-своему.","Ищи слова «удобно», «быстро», «и т. п.», «при необходимости»; поля без типов; действия без ролей; ошибки без кодов; события без полей и без правила обработки повторов.","Почти ответ: дай пакет ИИ и попроси перечислить вопросы, которые он задал бы перед кодом, и противоречия между разделами. Проверь вручную: у каждого эндпоинта роли и коды ошибок; у каждого события — конверт и обработка повторов по eventId; стыки слово в слово совпадают с пакетами Эльнары и Никиты; «не входит» записано явно; ни одна роль, кроме врача, не получает служебную заметку."]},"examples":[{"bad":"К визиту можно прикреплять файлы.","good":"Роли doctor и assistant прикрепляют к визиту файл PDF или JPG до 20 МБ: сначала POST /api/v1/platform/files, затем POST /api/v1/medcard/visits/{visitId}/files {fileId, kind: lab|photo|imaging_report} с Idempotency-Key. Больше 20 МБ — 413 FILE_TOO_LARGE, другой формат — 415 UNSUPPORTED_FILE_TYPE."},{"bad":"Нужен поиск питомца.","good":"GET /api/v1/medcard/pets/search?q=&limit= (роли doctor, assistant, admin, manager): q из 15 цифр — точный поиск по чипу; q, похожий на телефон, — нормализуем к +7XXXXXXXXXX и ищем питомцев владельца; иначе — по началу клички без учёта регистра. В ответе: petId, кличка, вид, порода, год рождения, ФИО владельца."},{"bad":"Операцию нельзя проводить без согласия.","good":"POST /api/v1/medcard/operations/{operationId}/start (роль doctor) возвращает 409 CONSENT_REQUIRED, если у операции нет подписанного согласия владельца: скан бумажного бланка (fileId) или подпись в приложении (ownerId, signedAt). Одно согласие покрывает операцию и анестезию."},{"bad":"Владельцу надо напоминать о прививках.","good":"За 14 и за 3 дня до validUntil последней вакцинации каждого типа владельцу уходит уведомление через POST /api/v1/platform/notifications (channel auto, template vaccination_due, dedupKey vacc-{vaccinationId}-14d и vacc-{vaccinationId}-3d) со ссылкой на запись с предзаполненной услугой. Если после неё уже есть более свежая вакцинация того же типа — не отправляется."}]};</script>
+<script>// Движок задания: рендер вкладок из window.COMMON + window.FEATURE, состояние ученика в localStorage.
+(function () {
+  const C = window.COMMON, F = window.FEATURE;
+  const META = C.features.find(x => x.code === F.code);
+  const STORE = 'lapa-' + F.code + '-v1';
+  document.documentElement.style.setProperty('--feat', META.color);
+
+  // ---------- состояние ----------
+  const blank = () => ({ tab: 'start', nb: {}, asked: [], free: [], docNotes: {}, docsSeen: {}, assum: [], open: [], notes: [], hints: {}, stages: {}, checks: {}, agree: {}, person: null, doc: null, theme: null });
+  let S = blank();
+  try { const raw = localStorage.getItem(STORE); if (raw) S = Object.assign(blank(), JSON.parse(raw)); } catch (e) {}
+  const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} };
+  if (S.theme) document.documentElement.setAttribute('data-theme', S.theme);
+
+  const facts = new Map(F.facts.map(f => [f.id, f]));
+  const qmap = new Map(F.questions.map(q => [q.id, q]));
+  const people = new Map(F.people.map(p => [p.id, p]));
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const $ = sel => document.querySelector(sel);
+
+  // ---------- логика интервью ----------
+  const asked = id => S.asked.includes(id);
+  const inNb = id => !!S.nb[id];
+  const available = q => !asked(q.id) && (q.requires || []).every(asked) && (q.requiresFacts || []).every(inNb);
+  const minutes = who => S.asked.map(id => qmap.get(id)).filter(q => q && (!who || q.who === who)).reduce((s, q) => s + q.min, 0)
+    + S.free.filter(x => !who || x.who === who).length * 4;
+  const hintsUsed = () => Object.values(S.hints).reduce((s, n) => s + n, 0);
+  const conflictPairs = () => {
+    const out = [], seen = new Set();
+    for (const f of F.facts) if (f.conflict && !seen.has(f.id)) {
+      seen.add(f.id); seen.add(f.conflict);
+      const res = F.questions.find(q => q.kind === 'conflict' && (q.requiresFacts || []).includes(f.id) && (q.requiresFacts || []).includes(f.conflict));
+      out.push({ a: f.id, b: f.conflict, res });
+    }
+    return out;
+  };
+
+  function addFact(id, src) {
+    if (S.nb[id]) return;
+    S.nb[id] = { src, at: Date.now() };
+    const f = facts.get(id);
+    if (f && f.conflict && S.nb[f.conflict]) toast('⚔ Найдено противоречие — посмотри в блокноте');
+    const fresh = F.questions.filter(q => (q.requiresFacts || []).includes(id) && available(q));
+    if (fresh.length) setTimeout(() => toast('Можно вернуться с этим к «' + people.get(fresh[0].who).name + '»'), 1600);
+  }
+
+  // ---------- общие куски ----------
+  const logo = `<svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6ee7ff"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#f0abfc"/></linearGradient></defs><rect width="120" height="120" rx="28" fill="url(#lg)"/><path d="M34 88 L60 28 L86 88" fill="none" stroke="#0a0a12" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#0a0a12"><rect x="47" y="66" width="6" height="11" rx="3"/><rect x="57" y="59" width="6" height="18" rx="3"/><rect x="67" y="63" width="6" height="14" rx="3"/></g></svg>`;
+
+  const TABS = [
+    ['start', 'Задание'], ['product', 'Продукт'], ['brief', 'Запрос заказчика'], ['docs', 'Документы'],
+    ['interview', 'Интервью'], ['notebook', 'Блокнот'], ['seams', 'Стыки'], ['pack', 'Сдача'],
+  ];
+
+  function seamMap(active) {
+    const fx = C.features;
+    const pos = { booking: [130, 70], medcard: [430, 70], billing: [280, 300] };
+    const edges = [['booking', 'medcard', 'S1'], ['medcard', 'billing', 'S2'], ['booking', 'billing', 'S3']];
+    let s = `<svg viewBox="0 0 560 370" role="img" aria-label="Карта стыков трёх фич">`;
+    for (const [a, b, id] of edges) {
+      const [x1, y1] = pos[a], [x2, y2] = pos[b];
+      const mine = a === active || b === active;
+      s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${mine ? 'var(--fg2)' : 'var(--line)'}" stroke-width="${mine ? 2.5 : 1.5}" ${mine ? '' : 'stroke-dasharray="5 5"'}/>`;
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+      s += `<rect x="${mx - 17}" y="${my - 12}" width="34" height="24" rx="6" fill="var(--s3)" stroke="var(--line)"/><text x="${mx}" y="${my + 5}" text-anchor="middle" font-size="12.5" font-weight="600" style="font-family:var(--f-mono)">${id}</text>`;
+    }
+    s += `<circle cx="280" cy="150" r="40" fill="var(--s2)" stroke="var(--line)" stroke-dasharray="3 4"/><text x="280" y="146" text-anchor="middle" font-size="12.5" font-weight="600">Платформа</text><text x="280" y="163" text-anchor="middle" class="sub">наставник</text>`;
+    for (const f of fx) {
+      const [x, y] = pos[f.code], me = f.code === active;
+      s += `<g><rect x="${x - 105}" y="${y - 38}" width="210" height="76" rx="12" fill="var(--s1)" stroke="${f.color}" stroke-width="${me ? 3 : 1.5}"/>`
+        + `<text x="${x}" y="${y - 8}" text-anchor="middle" font-size="15" font-weight="700" style="font-family:var(--f-head)">${f.icon} ${esc(f.title.replace('Электронная медкарта питомца', 'Медкарта питомца'))}</text>`
+        + `<text x="${x}" y="${y + 16}" text-anchor="middle" class="sub">${esc(f.student)}${me ? ' · это ты' : ''}</text></g>`;
+    }
+    return s + `</svg>`;
+  }
+
+  function hintBlock(stageId) {
+    const h = F.hints[stageId] || [];
+    const n = S.hints[stageId] || 0;
+    const lv = ['Направление', 'Конкретнее', 'Почти ответ'];
+    let out = `<div class="hints">`;
+    for (let i = 0; i < n; i++) out += `<div class="hint"><span class="lv">Подсказка ${i + 1} · ${lv[i]}</span>${h[i]}</div>`;
+    if (n < h.length) out += `<div><button class="btn sm ghost" data-act="hint" data-id="${stageId}">💡 ${n ? 'Ещё подсказка' : 'Подсказка'} (${n + 1} из ${h.length})</button></div>`;
+    return out + `</div>`;
+  }
+
+  // ---------- вкладки ----------
+  function pStart() {
+    const done = C.stages.filter(s => S.stages[s.id]).length;
+    const seams = F.seams.map(s => `${esc(s.partner)} (${esc(s.title)})`).join(', ');
+    const deadline = C.deadline ? esc(C.deadline) : 'назначит наставник';
+    let h = `<div class="page">
+    <section class="hero">
+      <div class="hero-txt">
+        <span class="eyebrow">Тестовое задание · продукт «${esc(C.product)}»</span>
+        <h1>${esc(F.student)}, спроектируй <b>${esc(F.title.toLowerCase())}</b> от и до</h1>
+        <p class="lead">Ты — системный аналитик продукта «Лапа» для сети ветклиник. Тебе досталась одна из трёх главных фич. Нужно самостоятельно выявить требования, договориться с соседями и собрать пакет, по которому разработчик построит фичу без единого вопроса к тебе.</p>
+        <p class="lead">Пакет пойдёт в настоящую разработку: наставник соберёт продукт с ИИ-разработчиком строго по пакетам вашей тройки. Чего нет в пакете — того не будет в продукте.</p>
+      </div>
+      <aside class="feature-card">
+        <div class="ico">${F.icon}</div>
+        <h2>${esc(F.title)}</h2>
+        <p class="muted">${esc(F.tagline)}</p>
+        <dl class="kv">
+          <dt>Аналитик</dt><dd>${esc(F.student)}</dd>
+          <dt>Код фичи</dt><dd><code>${F.code}</code></dd>
+          <dt>Таблицы</dt><dd><code>${META.tbl}*</code></dd>
+          <dt>API</dt><dd><code>${META.api}</code></dd>
+          <dt>Соседи</dt><dd>${seams}</dd>
+          <dt>Срок сдачи</dt><dd>${deadline}</dd>
+        </dl>
+      </aside>
+    </section>
+    <section class="grid2">
+      <div class="note"><b>Наставника рядом не будет</b><p>Всё, что нужно, есть на этой странице: документы, люди для интервью, подсказки трёх уровней на каждом шаге. Если ответа нет нигде — принимай решение самостоятельно, записывай его как допущение с причиной и иди дальше. Это нормальная работа аналитика.</p></div>
+      <div class="note warn"><b>Что сдаёшь в конце</b><p>Папку <code>lapa-${F.code}</code>: <code>SPEC.md</code>, <code>openapi.yaml</code>, <code>seed.json</code>, <code>README.md</code> и выгрузку блокнота <code>interview-notes.md</code>. Шаблоны — на вкладке «Сдача».</p></div>
+    </section>
+    <section class="sec">
+      <div class="row" style="justify-content:space-between"><h2>Маршрут</h2><span class="muted small">${done} из ${C.stages.length} шагов отмечено · подсказок открыто: ${hintsUsed()}</span></div>
+      <div class="progress"><i style="width:${Math.round(done / C.stages.length * 100)}%"></i></div>
+      <p class="muted small">Рекомендуемый темп — неделя: день 1 — шаги 1–4, день 2 — стыковая встреча, дни 3–5 — спецификация, день 6 — приёмка и проверка, день 7 — запас. Открытые подсказки попадают в выгрузку блокнота — это нормально, наставник просто видит, где было трудно.</p>
+      <div class="route">`;
+    C.stages.forEach((st, i) => {
+      const isDone = !!S.stages[st.id];
+      h += `<details class="stage${isDone ? ' done' : ''}" ${S.openStage === st.id ? 'open' : ''} data-stage="${st.id}">
+        <summary><span class="num">${isDone ? '✓' : i + 1}</span><span><span class="st-t">${esc(st.t)}</span><br><span class="st-m">${esc(st.time)} · результат: ${esc(st.result[0].toLowerCase() + st.result.slice(1))}</span></span><span class="muted small">▾</span></summary>
+        <div class="stage-body">
+          <p class="simple">${st.simple}</p>
+          <ul>${st.do.map(d => `<li>${d}</li>`).join('')}</ul>
+          ${hintBlock(st.id)}
+          <label class="check"><input type="checkbox" data-act="stage" data-id="${st.id}" ${isDone ? 'checked' : ''}> <span>Шаг сделан</span></label>
+        </div></details>`;
+    });
+    h += `</div></section></div>`;
+    return h;
+  }
+
+  function pProduct() {
+    let h = `<div class="page">
+      <section class="sec"><span class="eyebrow">Общий контекст — одинаковый у всей тройки</span><h1>Продукт «Лапа»</h1>
+      <div class="prose">${C.legend.map(p => `<p>${p}</p>`).join('')}</div></section>
+      <section class="stats">${C.numbers.map(([b, s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('')}</section>
+      <section class="sec"><h2>Три фичи и стыки между ними</h2>
+        <div class="map card">${seamMap(F.code)}</div>
+        <div class="grid3">${C.features.map(f => `<div class="card" style="border-color:${f.code === F.code ? f.color : 'var(--line)'}"><h3>${f.icon} ${esc(f.title)}</h3><p class="small">${esc(f.one)}</p><p class="muted small">${esc(f.student)} · <code>${f.api}</code></p></div>`).join('')}</div>
+      </section>
+      <section class="sec"><h2>Клиники</h2><div class="tbl"><table><thead><tr><th>Код</th><th>Название</th><th>Адрес</th><th>Часы</th><th>Особенности</th></tr></thead><tbody>
+        ${C.clinics.map(r => `<tr>${r.map((c, i) => `<td>${i === 0 ? `<code>${c}</code>` : esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>
+      <section class="grid2">
+        <div class="card"><h3>Как сейчас</h3>${C.asis.map(p => `<p class="small">${p}</p>`).join('')}</div>
+        <div class="card"><h3>Цели продукта на 2027</h3><ul class="small">${C.goals.map(g => `<li>${esc(g)}</li>`).join('')}</ul></div>
+      </section>
+      <section class="sec"><h2>Платформа</h2><p class="muted">Её делает наставник. Ты её не проектируешь, а пользуешься. Если фиче не хватает чего-то от платформы — опиши это в спецификации как «Запрос к платформе» с обоснованием.</p>
+        <div class="tbl"><table><tbody>${C.platform.map(([k, v]) => `<tr><th style="width:190px">${k}</th><td>${v}</td></tr>`).join('')}</tbody></table></div>
+        <pre>${C.platformApi.map(esc).join('\n')}</pre></section>
+      <section class="sec"><h2>Общие соглашения</h2><p class="muted">Обязательны для всех трёх пакетов — так три фичи соберутся в один продукт.</p>
+        <div class="tbl"><table><tbody>${C.conventions.map(([k, v]) => `<tr><th style="width:190px">${k}</th><td>${v}</td></tr>`).join('')}</tbody></table></div></section>
+    </div>`;
+    return h;
+  }
+
+  function pBrief() {
+    const m = people.get(F.brief.from) || { name: 'Марина Сергеевна Белова', role: 'генеральный директор' };
+    return `<div class="page">
+      <section class="sec"><span class="eyebrow">${F.icon} ${esc(F.title)}</span><h1>Запрос заказчика</h1>
+        <div class="prose">${F.why.map(p => `<p>${p}</p>`).join('')}</div></section>
+      <section class="letter">
+        <div class="letter-h"><span>От</span><span>${esc(m.name)}, ${esc(m.role)}</span><span>Кому</span><span>${esc(F.student)}, системный аналитик</span><span>Тема</span><span><b>${esc(F.brief.subject)}</b></span></div>
+        <div class="letter-b">${F.brief.paragraphs.map(p => `<p>${p}</p>`).join('')}</div>
+      </section>
+      <section class="grid2">
+        <div class="card"><h3>Что точно в твоей зоне</h3><ul class="small">${F.zone.map(z => `<li>${z}</li>`).join('')}</ul></div>
+        <div class="note warn"><b>Письмо — не требования</b><p class="small">Заказчик пишет как чувствует, а не как надо разработчику. Тут есть расплывчатые слова, пропуски и вещи, которые другие люди видят иначе. Твоя работа — превратить это в однозначные правила. Начни с документов, потом иди на интервью.</p></div>
+      </section></div>`;
+  }
+
+  function pDocs() {
+    const cur = F.docs.find(d => d.id === S.doc) || F.docs[0];
+    S.docsSeen[cur.id] = true;
+    return `<div class="page"><section class="sec"><h1>Документы «как есть»</h1><p class="lead">Что прислали из клиник и что удалось найти. Читай внимательно: важное спрятано в деталях. Под каждым документом — место для твоих заметок, они попадут в выгрузку блокнота.</p></section>
+      <section class="docs"><nav class="doc-list" aria-label="Документы">${F.docs.map(d => `<button class="doc-btn" data-act="doc" data-id="${d.id}" aria-current="${d.id === cur.id}"><span class="k">${esc(d.kind)}</span><span>${esc(d.title)}</span>${S.docsSeen[d.id] ? '<span class="seen">✓ прочитан</span>' : ''}</button>`).join('')}</nav>
+      <div class="doc-view"><div><h2>${esc(cur.title)}</h2><p class="muted small">${esc(cur.kind)} · от: ${esc(cur.from || '—')} · ${esc(cur.intro)}</p></div>
+        <div class="paper">${cur.html}</div>
+        <div class="sec"><label class="eyebrow" for="dn">Мои заметки по документу</label><textarea id="dn" data-act="docnote" data-id="${cur.id}" placeholder="Что здесь важно для требований? Числа, исключения, жалобы, вопросы к интервью…">${esc(S.docNotes[cur.id] || '')}</textarea></div>
+      </div></section></div>`;
+  }
+
+  function pInterview() {
+    const cur = people.get(S.person) || F.people[0];
+    const pid = cur.id;
+    const total = F.questions.filter(q => q.who === pid).length;
+    let h = `<div class="page"><section class="sec"><h1>Интервью</h1><p class="lead">Выбери человека и задавай вопросы. Уточняющие вопросы появляются после основных, к некоторым людям стоит вернуться, когда узнаешь что-то от других. Не всё, что говорят, — требование, и не все вопросы одинаково полезны.</p>
+      <div class="row small muted"><span class="chip">⏱ ${minutes()} мин на встречах</span><span class="chip">💬 ${S.asked.length + S.free.length} вопросов задано</span><span class="chip acc">📒 ${Object.keys(S.nb).length} в блокноте</span></div></section>
+      <section class="iv"><nav class="people" aria-label="Люди">${F.people.map(p => {
+        const n = F.questions.filter(q => q.who === p.id && asked(q.id)).length;
+        const av = F.questions.filter(q => q.who === p.id && available(q)).length;
+        return `<button class="person" data-act="person" data-id="${p.id}" aria-current="${p.id === pid}"><span class="em">${p.emoji}</span><span class="nm">${esc(p.name)}</span><span class="rl">${esc(p.role)}</span><span class="cnt">задано ${n} · можно ещё ${av} · ${minutes(p.id)} мин</span></button>`;
+      }).join('')}</nav>
+      <div class="meeting">
+        <div class="m-head"><span class="em">${cur.emoji}</span><div><h2>${esc(cur.name)}</h2><p class="muted small">${esc(cur.role)}</p></div></div>
+        <div class="say">${cur.hello}</div>
+        <div class="log">`;
+    const log = S.asked.map(id => qmap.get(id)).filter(q => q && q.who === pid);
+    for (const q of log) h += qaBlock(q.q, q.a, q.facts, 'q:' + q.id);
+    for (const [i, x] of S.free.entries()) if (x.who === pid) h += qaBlock('✍ ' + x.q, esc(x.a), x.facts || [], 'free:' + i);
+    h += `</div>`;
+    const av = F.questions.filter(q => q.who === pid && available(q));
+    if (av.length) {
+      const topics = [...new Set(av.map(q => q.topic))];
+      h += `<div class="qbank"><h3>Что спросить</h3>${topics.map(t => `<div class="topic"><h4>${esc(t)}</h4>${av.filter(q => q.topic === t).map(q => `<button class="qbtn" data-act="ask" data-id="${q.id}"><span>${esc(q.q)}</span>${q.kind === 'conflict' ? '<span class="tag">противоречие</span>' : (q.requires || []).length ? '<span class="tag">уточнение</span>' : ''}<span class="mn">${q.min} мин</span></button>`).join('')}</div>`).join('')}</div>`;
+    } else {
+      h += `<div class="note"><b>Вопросы к этому человеку закончились</b><p class="small">${log.length}/${total} заданы. Возможно, сюда стоит вернуться позже — когда в блокноте появится то, что нужно обсудить с ним.</p></div>`;
+    }
+    h += `<div class="free" id="free-box" hidden><h3>Свой вопрос</h3><p class="muted small">Ответит Claude в роли этого человека — только в рамках того, что персонаж знает. Расходует лимит твоего аккаунта Claude.</p>
+        <textarea id="free-q" placeholder="Например: а что происходит, если…"></textarea>
+        <div class="row"><button class="btn" data-act="free" data-id="${pid}">Спросить</button><span class="muted small" id="free-st"></span></div></div>`;
+    h += `</div></section></div>`;
+    return h;
+  }
+
+  function qaBlock(q, a, fids, src) {
+    let h = `<div class="qa"><div class="ask">${esc(q)}</div><div class="say">${a}</div>`;
+    if (fids && fids.length) {
+      h += `<div class="facts-out">${fids.map(id => {
+        const f = facts.get(id); if (!f) return '';
+        return inNb(id)
+          ? `<div class="fact-add in"><span class="t">${esc(f.text)}</span><span class="chip acc">в блокноте</span></div>`
+          : `<div class="fact-add"><span class="t">${esc(f.text)}</span><button class="btn sm" data-act="add" data-id="${id}" data-src="${esc(src)}">＋ В блокнот</button></div>`;
+      }).join('')}</div>`;
+    }
+    return h + `</div>`;
+  }
+
+  function srcLabel(src) {
+    if (!src) return '';
+    const [kind, id] = src.split(':');
+    if (kind === 'q') { const q = qmap.get(id); return q ? `${people.get(q.who).name} · «${q.q}»` : ''; }
+    if (kind === 'free') { const x = S.free[+id]; return x ? `${people.get(x.who)?.name} · свой вопрос «${x.q}»` : ''; }
+    return '';
+  }
+
+  function pNotebook() {
+    const ids = Object.keys(S.nb).filter(id => facts.has(id));
+    const pairs = conflictPairs().filter(p => inNb(p.a) && inNb(p.b));
+    let h = `<div class="page"><section class="sec"><h1>Блокнот аналитика</h1><p class="lead">Всё, что записано на интервью, заметки по документам, допущения и открытые вопросы. Отсюда — в спецификацию. Выгрузка блокнота — обязательная часть пакета.</p>
+      <div class="stats"><div class="stat"><b>${ids.length}</b><span>фактов записано</span></div><div class="stat"><b>${minutes()}</b><span>минут интервью</span></div><div class="stat"><b>${S.asked.length + S.free.length}</b><span>вопросов задано</span></div><div class="stat"><b>${Object.keys(S.docsSeen).length}/${F.docs.length}</b><span>документов прочитано</span></div><div class="stat"><b>${hintsUsed()}</b><span>подсказок открыто</span></div></div>
+      <div class="row"><button class="btn primary" data-act="export-dl">⬇ Скачать interview-notes.md</button><button class="btn" data-act="export-copy">Скопировать как Markdown</button></div></section>`;
+    if (pairs.length) {
+      h += `<section class="sec"><h2>Противоречия</h2>${pairs.map(p => {
+        const done = p.res && asked(p.res.id);
+        return `<div class="note ${done ? '' : 'bad'}"><b>${done ? '✓ Решено' : '⚔ Нужно решение'}</b><p class="small">«${esc(facts.get(p.a).text)}»<br>против<br>«${esc(facts.get(p.b).text)}»</p>${done ? `<p class="small muted">Решение принял: ${esc(people.get(p.res.who).name)}. Не забудь записать решение в блокнот и в журнал решений спецификации.</p>` : '<p class="small">Аналитик не выбирает сам. Подумай, кто отвечает за этот вопрос, и сходи к нему: у него появился новый вопрос.</p>'}</div>`;
+      }).join('')}</section>`;
+    }
+    h += `<section class="sec"><h2>Факты</h2>`;
+    if (!ids.length) h += `<p class="muted">Пока пусто. Иди на вкладку «Интервью» и записывай важное кнопкой «＋ В блокнот».</p>`;
+    for (const [cat, label] of Object.entries(C.cats)) {
+      const list = ids.filter(id => facts.get(id).cat === cat);
+      if (!list.length) continue;
+      h += `<div class="card"><h3>${label} <span class="muted small">${list.length}</span></h3>${list.map(id => `<div class="nb-item"><span>${esc(facts.get(id).text)}${facts.get(id).conflict && inNb(facts.get(id).conflict) ? ' <span class="chip bad">противоречие</span>' : ''}</span><button class="x" title="Убрать из блокнота" aria-label="Убрать" data-act="unfact" data-id="${id}">×</button><span class="src">${esc(srcLabel(S.nb[id].src))}</span></div>`).join('')}</div>`;
+    }
+    h += `</section><section class="grid2">${listEditor('assum', 'Допущения', 'Что решено без ответа заказчика — и почему')}${listEditor('open', 'Открытые вопросы', 'Что осталось непонятным и кому задать')}</section>
+      ${listEditor('notes', 'Прочие заметки', 'Идеи, наблюдения, договорённости с соседями')}</div>`;
+    return h;
+  }
+
+  function listEditor(key, title, ph) {
+    return `<div class="card"><h3>${title}</h3>${(S[key] || []).map((t, i) => `<div class="nb-item"><span>${esc(t)}</span><button class="x" aria-label="Удалить" data-act="del-${key}" data-id="${i}">×</button></div>`).join('') || '<p class="muted small">Пока пусто.</p>'}
+      <textarea id="in-${key}" placeholder="${esc(ph)}"></textarea><div><button class="btn sm" data-act="add-${key}">Добавить</button></div></div>`;
+  }
+
+  function pSeams() {
+    return `<div class="page"><section class="sec"><h1>Стыки с соседями</h1><p class="lead">Твоя фича не живёт одна. Где она касается соседей, наставник задал минимальный базовый контракт — его нельзя ломать. Остальное вы договариваете сами на стыковой встрече и записываете одинаково в оба пакета.</p>
+      <div class="map card">${seamMap(F.code)}</div></section>
+      ${F.seams.map(s => `<section class="card seam" style="--feat2:${(C.features.find(f => f.code === s.with) || {}).color}">
+        <div class="row" style="justify-content:space-between"><h2>${s.id}. ${esc(s.title)}</h2><span class="chip">с ${esc(s.partner)}</span></div>
+        <div class="give-take"><div><h4>Ты отдаёшь соседу</h4><ul class="small">${s.give.map(x => `<li>${x}</li>`).join('')}</ul></div><div><h4>Ты берёшь у соседа</h4><ul class="small">${s.take.map(x => `<li>${x}</li>`).join('')}</ul></div></div>
+        <h4>Базовый контракт от наставника</h4><div class="small prose">${s.base}</div>
+        <h4>Договорить на встрече</h4>
+        <div class="sec">${s.agree.map((a, i) => { const k = s.id + ':' + i; return `<label class="check"><input type="checkbox" data-act="agree" data-id="${k}" ${S.agree[k] ? 'checked' : ''}><span class="small">${a}</span></label>`; }).join('')}</div>
+      </section>`).join('')}
+      <section class="sec"><h2>Протокол стыковой встречи</h2><p class="muted">Скопируй, заполните вместе, вставьте в раздел 10.3 обоих пакетов.</p><pre id="proto">${esc(protocol())}</pre><div><button class="btn" data-act="copy-proto">Скопировать шаблон протокола</button></div></section></div>`;
+  }
+
+  function protocol() {
+    return F.seams.map(s => `### ${s.id}. ${s.title} — протокол
+Дата: ГГГГ-ММ-ДД. Участники: ${F.student}, ${s.partner}.
+
+| № | Вопрос | Решение | Кто вызывает / публикует | Поля / событие | Что при повторе и сбое |
+|---|---|---|---|---|---|
+${s.agree.map((a, i) => `| ${i + 1} | ${a.replace(/<[^>]+>/g, '')} | | | | |`).join('\n')}
+
+Изменения базового контракта: нет (только дополнения).
+`).join('\n');
+  }
+
+  function pPack() {
+    return `<div class="page"><section class="sec"><h1>Сдача</h1><p class="lead">Пакет — это то, что наставник отдаст ИИ-разработчику. Он не будет спрашивать «а что имелось в виду» — он сделает ровно то, что написано, а где не написано — придумает сам.</p></section>
+      <section class="grid2"><div class="card"><h3>Состав пакета</h3><div class="files">lapa-${F.code}/
+├─ README.md            что за фича и как читать пакет
+├─ SPEC.md              спецификация по шаблону
+├─ openapi.yaml         контракт API ${META.api}
+├─ seed.json            тестовые данные
+└─ interview-notes.md   выгрузка блокнота</div><p class="small muted">Отправь папку архивом наставнику до срока. Пакеты соседей не нужны, но раздел «Стыки» должен совпадать с ними.</p></div>
+      <div class="card"><h3>Шаблоны</h3><p class="small">Пример в каждом разделе шаблона — из другой предметной области. Он показывает форму, а не ответ.</p>
+        ${[['SPEC.md', 'spec'], ['openapi.yaml', 'openapi'], ['seed.json', 'seed'], ['README.md', 'readme']].map(([n, k]) => `<div class="row"><code>${n}</code><button class="btn sm" data-act="dl" data-id="${k}">⬇ Скачать</button><button class="btn sm ghost" data-act="cp" data-id="${k}">Скопировать</button></div>`).join('')}
+        <p class="small muted">В seed.json уже лежат общие данные платформы — клиники, сотрудники, владельцы, питомцы. Они одинаковые у всей тройки, добавляй к ним свои.</p></div></section>
+      <section class="sec"><h2>Как писать, чтобы понял ИИ-разработчик</h2><div class="grid2"><ol class="small">${C.aiRules.slice(0, 5).map(r => `<li>${r}</li>`).join('')}</ol><ol class="small" start="6">${C.aiRules.slice(5).map(r => `<li>${r}</li>`).join('')}</ol></div>
+        ${F.examples.map(e => `<div class="badbood"><div class="b"><span class="lbl">Плохо</span>${esc(e.bad)}</div><div class="g"><span class="lbl">Хорошо</span>${esc(e.good)}</div></div>`).join('')}</section>
+      <section class="sec"><h2>Проверка глазами ИИ-разработчика</h2><p class="muted">Последний шаг перед сдачей. Отдай пакет нейросети с этим промптом и закрой всё, что она найдёт.</p><pre id="aiprompt">${esc(C.aiPrompt)}</pre><div><button class="btn" data-act="copy-ai">Скопировать промпт</button></div></section>
+      <section class="sec"><h2>Как будут оценивать</h2><div class="tbl"><table><thead><tr><th>Что смотрим</th><th>Баллы</th><th>Что значит «хорошо»</th></tr></thead><tbody>${C.rubricPublic.map(([a, b, c]) => `<tr><td>${a}</td><td>${b}</td><td class="small">${c}</td></tr>`).join('')}<tr><th>Итого</th><th>100</th><th></th></tr></tbody></table></div>
+        <p class="small muted">Отдельно наставник прогонит пакет через ИИ-разработчика. Если по пакету собирается работающая фича без вопросов к автору — это главный зачёт.</p></section>
+      <section class="sec"><h2>Самопроверка перед сдачей</h2><div class="card">${C.checklist.map((t, i) => `<label class="check"><input type="checkbox" data-act="check" data-id="${i}" ${S.checks[i] ? 'checked' : ''}><span>${esc(t)}</span></label>`).join('')}</div></section></div>`;
+  }
+
+  // ---------- выгрузка ----------
+  function exportMd() {
+    const lines = [`# Блокнот интервью — ${F.title}`, '', `Аналитик: ${F.student}. Выгружено: ${new Date().toLocaleString('ru-RU')}.`, '',
+      `Итоги: фактов ${Object.keys(S.nb).length}, интервью ${minutes()} мин, вопросов ${S.asked.length + S.free.length}, документов прочитано ${Object.keys(S.docsSeen).length} из ${F.docs.length}, подсказок открыто ${hintsUsed()}.`, ''];
+    for (const [cat, label] of Object.entries(C.cats)) {
+      const list = Object.keys(S.nb).filter(id => facts.get(id)?.cat === cat);
+      if (!list.length) continue;
+      lines.push(`## ${label}`, '');
+      for (const id of list) lines.push(`- ${facts.get(id).text}  \n  _Источник: ${srcLabel(S.nb[id].src)}_`);
+      lines.push('');
+    }
+    const dn = F.docs.filter(d => (S.docNotes[d.id] || '').trim());
+    if (dn.length) { lines.push('## Заметки по документам', ''); for (const d of dn) lines.push(`### ${d.title}`, '', S.docNotes[d.id].trim(), ''); }
+    for (const [k, t] of [['assum', 'Допущения'], ['open', 'Открытые вопросы'], ['notes', 'Прочие заметки']]) if (S[k].length) { lines.push(`## ${t}`, '', ...S[k].map(x => `- ${x}`), ''); }
+    lines.push('## Журнал интервью', '');
+    for (const p of F.people) {
+      const qs = S.asked.map(id => qmap.get(id)).filter(q => q && q.who === p.id);
+      const fr = S.free.filter(x => x.who === p.id);
+      if (!qs.length && !fr.length) continue;
+      lines.push(`### ${p.name} (${p.role}) — ${minutes(p.id)} мин`, '');
+      for (const q of qs) lines.push(`- **${q.q}**  \n  ${q.a.replace(/<[^>]+>/g, '')}`);
+      for (const x of fr) lines.push(`- **${x.q}** _(свой вопрос)_  \n  ${x.a}`);
+      lines.push('');
+    }
+    const code = { c: F.code, f: Object.keys(S.nb), q: S.asked.length, fr: S.free.length, m: minutes(), h: S.hints, d: Object.keys(S.docsSeen).length };
+    let enc = ''; try { enc = btoa(unescape(encodeURIComponent(JSON.stringify(code)))); } catch (e) {}
+    lines.push('---', '', 'Код для наставника (вставить в ключ проверки):', '', '```', 'LAPA1:' + enc, '```', '');
+    return lines.join('\n');
+  }
+
+  function fileText(k) {
+    if (k === 'spec') return ['SPEC.md', C.specTemplate(F, META, F.seams)];
+    if (k === 'openapi') return ['openapi.yaml', C.openapiTemplate(F, META)];
+    if (k === 'seed') return ['seed.json', JSON.stringify(Object.assign({ _comment: 'Общие данные платформы — не менять id. Добавь ниже данные своей фичи.' }, C.seed, { [F.code]: {} }), null, 2)];
+    if (k === 'readme') return ['README.md', C.readmeTemplate(F, META)];
+  }
+
+  let dlCap;
+  async function saveFile(name, text) {
+    if (window.claude && dlCap === undefined) { try { dlCap = await window.claude.use('downloads'); } catch (e) { dlCap = null; } }
+    if (dlCap) {
+      try { await dlCap.save({ filename: name, data: text }); toast('Сохранено: ' + name); return; }
+      catch (e) { if (e && e.code === 'declined') return; }
+    }
+    try {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+      a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    } catch (e) { copy(text); }
+  }
+  async function copy(text) {
+    try { await navigator.clipboard.writeText(text); toast('Скопировано'); }
+    catch (e) {
+      const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); toast('Скопировано'); } catch (e2) { toast('Не получилось скопировать — выдели текст вручную'); }
+      ta.remove();
+    }
+  }
+  let tt;
+  function toast(t) {
+    let el = $('.toast'); if (!el) { el = document.createElement('div'); el.className = 'toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+    el.textContent = t; el.hidden = false; clearTimeout(tt); tt = setTimeout(() => { el.hidden = true; }, 2600);
+  }
+
+  // ---------- свой вопрос через Claude (только в артефакте) ----------
+  let sample = null;
+  if (window.claude && window.claude.use) window.claude.use('sample').then(s => { sample = s; showFree(); }).catch(() => {});
+  function showFree() { const b = $('#free-box'); if (b && sample) b.hidden = false; }
+
+  async function askFree(pid) {
+    const ta = $('#free-q'), st = $('#free-st'), btn = document.querySelector('[data-act="free"]');
+    const text = (ta.value || '').trim(); if (!text || !sample) return;
+    const p = people.get(pid);
+    const qs = F.questions.filter(q => q.who === pid && (q.requiresFacts || []).every(inNb));
+    const known = [...new Set(qs.flatMap(q => q.facts))].map(id => `${id}: ${facts.get(id).text}`).join('\n');
+    const examples = qs.filter(q => q.kind === 'good').slice(0, 5).map(q => `Вопрос: ${q.q}\nОтвет: ${q.a.replace(/<[^>]+>/g, '')}`).join('\n\n');
+    const prompt = `Ты играешь роль персонажа в учебном симуляторе интервью для начинающего системного аналитика. Продукт — «Лапа», сеть ветеринарных клиник в Нижнем Новгороде.
+Персонаж: ${p.name}, ${p.role}. Как начинает разговор: «${p.hello.replace(/<[^>]+>/g, '')}».
+
+Персонаж знает ТОЛЬКО эти факты:
+${known}
+
+Примеры того, как персонаж отвечает:
+${examples}
+
+Правила ответа:
+- По-русски, от первого лица, 2–5 предложений, разговорно, в характере. Без терминов аналитика («бизнес-правило», «статус», «эндпоинт», «требование»).
+- Опирайся только на факты из списка, не выдумывай новых чисел и правил. Если вопрос о том, чего в фактах нет, честно скажи, что не знаешь или не задумывался(-ась), и предложи решить это аналитику или спросить другого человека.
+- Отвечай только на то, о чём спросили, не пересказывай всё подряд.
+- Если спрашивают про решение (какая кнопка, какая база, какой экран), скажи, что тебе это неважно, и расскажи о своей проблеме, если она есть в фактах.
+- Если вопрос не по делу или некорректный — вежливо верни разговор к работе.
+
+Верни только JSON: {"answer": "текст ответа", "facts": ["ID фактов, на которые реально опирается ответ"]}.
+
+Вопрос аналитика: ${text}`;
+    btn.disabled = true; st.textContent = `${p.name.split(' ')[0]} думает…`;
+    try {
+      const r = await sample.json(prompt, { cache: false });
+      const ans = String(r && r.answer || '').trim();
+      if (!ans) throw { code: 'invalid_json' };
+      const fs = (Array.isArray(r.facts) ? r.facts : []).map(String).filter(id => facts.has(id) && qs.some(q => q.facts.includes(id)));
+      S.free.push({ who: pid, q: text, a: ans, facts: fs }); save(); render();
+    } catch (e) {
+      const code = e && e.code;
+      if (['not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed'].includes(code)) { sample = null; const b = $('#free-box'); if (b) b.hidden = true; return; }
+      st.textContent = code === 'rate_limited' ? 'Слишком много вопросов подряд — попробуй через минуту.' : 'Ответ не пришёл. Попробуй переформулировать вопрос.';
+      btn.disabled = false;
+    }
+  }
+
+  // ---------- рендер и события ----------
+  const PAGES = { start: pStart, product: pProduct, brief: pBrief, docs: pDocs, interview: pInterview, notebook: pNotebook, seams: pSeams, pack: pPack };
+  function render() {
+    const app = $('#app');
+    const nbCount = Object.keys(S.nb).length;
+    app.innerHTML = `<header class="top"><div class="top-in">
+      <div class="brand">${logo}<span class="wm">AMP<i>.</i></span><span class="sep">/</span><span class="prod">Лапа · тестовое задание</span><span class="sp"></span>
+        <span class="who"><span class="dot"></span>${esc(F.student)} · ${esc(F.short)}</span>
+        <button class="icon-btn" data-act="theme" title="Светлая или тёмная тема" aria-label="Переключить тему">◐</button></div>
+      <nav class="tabs" role="tablist">${TABS.map(([id, t]) => `<button class="tab" role="tab" data-act="tab" data-id="${id}" aria-selected="${S.tab === id}">${t}${id === 'notebook' && nbCount ? `<span class="n">${nbCount}</span>` : ''}</button>`).join('')}</nav>
+    </div></header><main id="main">${(PAGES[S.tab] || pStart)()}</main>
+    <footer class="foot">Продукт «Лапа» и все люди в задании выдуманы для учебной задачи. Прогресс хранится только в этом браузере. Версия ${esc(C.version)}.</footer>`;
+    showFree();
+    save();
+  }
+
+  document.addEventListener('click', e => {
+    const el = e.target.closest('[data-act]'); if (!el) return;
+    const act = el.dataset.act, id = el.dataset.id;
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
+    switch (act) {
+      case 'tab': S.tab = id; render(); window.scrollTo(0, 0); break;
+      case 'theme': {
+        const cur = document.documentElement.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        S.theme = cur === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', S.theme); save(); break;
+      }
+      case 'hint': S.hints[id] = (S.hints[id] || 0) + 1; S.openStage = id; render(); break;
+      case 'doc': S.doc = id; render(); break;
+      case 'person': S.person = id; render(); break;
+      case 'ask': {
+        const q = qmap.get(id); if (!q || !available(q)) return;
+        const before = new Set(F.questions.filter(available).map(x => x.id));
+        S.asked.push(id); S.person = q.who;
+        render();
+        const fresh = F.questions.filter(x => available(x) && !before.has(x.id) && x.id !== id);
+        if (fresh.length) toast(fresh.length === 1 ? 'Появился уточняющий вопрос' : `Появилось уточняющих вопросов: ${fresh.length}`);
+        const blocks = document.querySelectorAll('.log .qa'); if (blocks.length) blocks[blocks.length - 1].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        break;
+      }
+      case 'add': { const y = window.scrollY; addFact(id, el.dataset.src); render(); window.scrollTo(0, y); break; }
+      case 'unfact': delete S.nb[id]; render(); break;
+      case 'free': askFree(id); break;
+      case 'export-dl': saveFile('interview-notes.md', exportMd()); break;
+      case 'export-copy': copy(exportMd()); break;
+      case 'dl': { const [n, t] = fileText(id); saveFile(n, t); break; }
+      case 'cp': { const [, t] = fileText(id); copy(t); break; }
+      case 'copy-ai': copy(C.aiPrompt); break;
+      case 'copy-proto': copy(protocol()); break;
+      default:
+        if (act.startsWith('add-')) { const k = act.slice(4); const v = ($('#in-' + k).value || '').trim(); if (v) { S[k].push(v); render(); } }
+        else if (act.startsWith('del-')) { const k = act.slice(4); S[k].splice(+id, 1); render(); }
+    }
+  });
+  document.addEventListener('change', e => {
+    const el = e.target; const act = el.dataset && el.dataset.act; if (!act) return;
+    if (act === 'stage') { S.stages[el.dataset.id] = el.checked; S.openStage = el.dataset.id; render(); }
+    if (act === 'check') { S.checks[el.dataset.id] = el.checked; save(); }
+    if (act === 'agree') { S.agree[el.dataset.id] = el.checked; save(); }
+  });
+  document.addEventListener('input', e => {
+    const el = e.target; if (el.dataset && el.dataset.act === 'docnote') { S.docNotes[el.dataset.id] = el.value; save(); }
+  });
+  document.addEventListener('toggle', e => {
+    const d = e.target; if (d.classList && d.classList.contains('stage') && d.open) { S.openStage = d.dataset.stage; save(); }
+  }, true);
+
+  render();
+})();
+</script>
+</body>
+</html>
